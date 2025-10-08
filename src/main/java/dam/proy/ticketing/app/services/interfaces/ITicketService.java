@@ -1,4 +1,8 @@
 package dam.proy.ticketing.app.services.interfaces;
 
-public interface ITicketService {
+import dam.proy.ticketing.app.models.Ticket;
+
+public interface ITicketService
+{
+
 }
