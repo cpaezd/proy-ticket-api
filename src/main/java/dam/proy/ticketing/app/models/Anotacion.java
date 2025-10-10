@@ -1,5 +1,6 @@
 package dam.proy.ticketing.app.models;
 
+import dam.proy.ticketing.app.models.enums.VisibilidadTicket;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

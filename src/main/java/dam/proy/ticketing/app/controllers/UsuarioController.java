@@ -1,6 +1,6 @@
 package dam.proy.ticketing.app.controllers;
 
-import dam.proy.ticketing.app.dto.LoginRespuestaDTO;
+import dam.proy.ticketing.app.models.dto.LoginResponseDTO;
 import dam.proy.ticketing.app.models.Usuario;
 import dam.proy.ticketing.app.services.interfaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Usuario usuario){
-        LoginRespuestaDTO autentificado = usuarioService.autentificar(usuario);
+        LoginResponseDTO autentificado = usuarioService.autentificar(usuario);
 
         if(autentificado != null){
             return ResponseEntity.ok(autentificado);

@@ -1,6 +1,6 @@
 package dam.proy.ticketing.app.services;
 
-import dam.proy.ticketing.app.dto.LoginRespuestaDTO;
+import dam.proy.ticketing.app.models.dto.LoginResponseDTO;
 import dam.proy.ticketing.app.models.Usuario;
 import dam.proy.ticketing.app.repositories.UsuarioRepository;
 import dam.proy.ticketing.app.security.JwtUtil;
@@ -22,14 +22,14 @@ public class UsuarioService implements IUsuarioService {
 
     //LOGIN
     @Override
-    public LoginRespuestaDTO autentificar(Usuario usuario) {
+    public LoginResponseDTO autentificar(Usuario usuario) {
         Usuario usuario1 = usuarioRepository.findByEmail(usuario.getEmail());
 
         if(usuario1 != null && passwordEncoder.matches(usuario.getPassword(),usuario1.getPassword())&& usuario1.isActivo()==true){
 
             String token = jwtUtil.generarToken(usuario1.getEmail());
 
-            LoginRespuestaDTO usuario2 = new LoginRespuestaDTO();
+            LoginResponseDTO usuario2 = new LoginResponseDTO();
 
             usuario2.setToken(token);
             usuario2.setId_perfil(usuario1.getPerfil().getId());

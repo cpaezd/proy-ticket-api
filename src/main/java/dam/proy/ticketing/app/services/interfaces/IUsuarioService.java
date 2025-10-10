@@ -1,10 +1,10 @@
 package dam.proy.ticketing.app.services.interfaces;
 
-import dam.proy.ticketing.app.dto.LoginRespuestaDTO;
+import dam.proy.ticketing.app.models.dto.LoginResponseDTO;
 import dam.proy.ticketing.app.models.Usuario;
 
 public interface IUsuarioService {
 
-    public LoginRespuestaDTO autentificar(Usuario usuario);
+    public LoginResponseDTO autentificar(Usuario usuario);
     public Usuario buscarPorEmail(String email);
 }
