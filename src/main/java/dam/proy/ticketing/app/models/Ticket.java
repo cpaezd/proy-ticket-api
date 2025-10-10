@@ -2,14 +2,13 @@ package dam.proy.ticketing.app.models;
 
 import dam.proy.ticketing.app.models.enums.EstadoTicket;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name="tickets")
+
 public class Ticket {
 
     @Id
@@ -86,7 +85,111 @@ public class Ticket {
         this.asunto = asunto;
     }
 
-	@Override
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getAsunto() {
+        return asunto;
+    }
+
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public EstadoTicket getEstadoTicket() {
+        return estadoTicket;
+    }
+
+    public void setEstadoTicket(EstadoTicket estadoTicket) {
+        this.estadoTicket = estadoTicket;
+    }
+
+    public String getUrgencia() {
+        return urgencia;
+    }
+
+    public void setUrgencia(String urgencia) {
+        this.urgencia = urgencia;
+    }
+
+    public String getImpacto() {
+        return impacto;
+    }
+
+    public void setImpacto(String impacto) {
+        this.impacto = impacto;
+    }
+
+    public String getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(String prioridad) {
+        this.prioridad = prioridad;
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
+    }
+
+    public Solicitante getSolicitante() {
+        return solicitante;
+    }
+
+    public void setSolicitante(Solicitante solicitante) {
+        this.solicitante = solicitante;
+    }
+
+    public Agente getAgente() {
+        return agente;
+    }
+
+    public void setAgente(Agente agente) {
+        this.agente = agente;
+    }
+
+    public List<Historial> getHistoriales() {
+        return historiales;
+    }
+
+    public void setHistoriales(List<Historial> historiales) {
+        this.historiales = historiales;
+    }
+
+    public List<Anotacion> getAnotaciones() {
+        return anotaciones;
+    }
+
+    public void setAnotaciones(List<Anotacion> anotaciones) {
+        this.anotaciones = anotaciones;
+    }
+
+    @Override
     public String toString() {
         return "Ticket{" +
                 "id=" + id +

@@ -1,6 +1,7 @@
 package dam.proy.ticketing.app.models;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class Solicitante {
     private String cif;
 
     @OneToMany(mappedBy = "solicitante")
+    @JsonManagedReference
     private List<Ticket> tickets;
 
     //Aqui para poder hacer la herencia al tener una clave que se comporta como PK y FK a su vez necesitamos agregar la etiqueta MapsId
