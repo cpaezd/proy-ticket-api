@@ -2,12 +2,13 @@ package dam.proy.ticketing.app.models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name= "perfil")
+@Table(name= "perfiles")
 public class Perfil {
 
     @Id
@@ -18,7 +19,7 @@ public class Perfil {
     private String nombre;
 
     @OneToMany(mappedBy = "perfil")
-    @JsonBackReference
+    @JsonIgnore
     private List<Usuario> usuarios;
 
     public Perfil() {

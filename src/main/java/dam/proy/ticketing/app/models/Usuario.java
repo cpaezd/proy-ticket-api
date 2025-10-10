@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table(name="usuarios")
 public class Usuario {
 
     @Id
@@ -25,7 +25,6 @@ public class Usuario {
 
     @ManyToOne
     @JoinColumn(name = "perfil")
-    @JsonManagedReference
     private Perfil perfil;
 
     public Usuario() {
@@ -37,6 +36,11 @@ public class Usuario {
         this.apellidos = apellidos;
         this.email = email;
         this.activo = activo;
+    }
+
+    public Usuario(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     public int getId() {
