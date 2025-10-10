@@ -1,5 +1,6 @@
 package dam.proy.ticketing.app.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import dam.proy.ticketing.app.models.enums.EstadoTicket;
 import jakarta.persistence.*;
 
@@ -39,14 +40,17 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "grupo")
+    @JsonBackReference
     private Grupo grupo;
 
     @ManyToOne
     @JoinColumn(name="solicitante")
+    @JsonBackReference
     private Solicitante solicitante;
 
     @ManyToOne
     @JoinColumn(name = "tecnico")
+    @JsonBackReference
     private Agente agente;
 
     @OneToMany(mappedBy = "ticket")
