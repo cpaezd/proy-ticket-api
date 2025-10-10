@@ -1,6 +1,8 @@
 package dam.proy.ticketing.app.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,9 +16,11 @@ public class Agente {
 
     @ManyToOne
     @JoinColumn(name="grupo")
+    @JsonBackReference
     private Grupo grupo;
 
     @OneToMany(mappedBy = "agente")
+    @JsonManagedReference
     private List<Ticket> tickets;
 
     //Al tener herencia de usuario necesitamos agregar la etiqueta MasId a la relación OnetoOne

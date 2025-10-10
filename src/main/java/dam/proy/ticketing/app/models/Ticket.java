@@ -1,5 +1,6 @@
 package dam.proy.ticketing.app.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class Ticket {
     @Column
     private String descripcion;
 
-    @Column
+    @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
 
     @Column(name="estado")
@@ -38,14 +39,17 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "grupo")
+    @JsonBackReference
     private Grupo grupo;
 
     @ManyToOne
     @JoinColumn(name="solicitante")
+    @JsonBackReference
     private Solicitante solicitante;
 
     @ManyToOne
     @JoinColumn(name = "tecnico")
+    @JsonBackReference
     private Agente agente;
 
     @OneToMany(mappedBy = "ticket")
