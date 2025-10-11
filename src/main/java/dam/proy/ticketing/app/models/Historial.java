@@ -2,6 +2,8 @@ package dam.proy.ticketing.app.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name="historial")
 public class Historial {
@@ -11,10 +13,10 @@ public class Historial {
     private int id;
 
     @Column
-    private String accion;
+    private LocalDateTime fecha;
 
     @Column
-    private String contenido;
+    private String detalles;
 
     @ManyToOne
     @JoinColumn(name = "ticket")
@@ -27,18 +29,18 @@ public class Historial {
     public Historial() {
     }
 
-    public Historial(int id, String contenido, String accion) {
+    public Historial(int id, LocalDateTime fecha, String detalles, Ticket ticket, Usuario usuario) {
         this.id = id;
-        this.contenido = contenido;
-        this.accion = accion;
+        this.fecha = fecha;
+        this.detalles = detalles;
+        this.ticket = ticket;
+        this.usuario = usuario;
     }
 
-    public Historial(int id, Usuario usuario, Ticket ticket, String contenido, String accion) {
+    public Historial(int id, String detalles, LocalDateTime fecha) {
         this.id = id;
-        this.usuario = usuario;
-        this.ticket = ticket;
-        this.contenido = contenido;
-        this.accion = accion;
+        this.detalles = detalles;
+        this.fecha = fecha;
     }
 
     public int getId() {
@@ -49,12 +51,20 @@ public class Historial {
         this.id = id;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public LocalDateTime getFecha() {
+        return fecha;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(String detalles) {
+        this.detalles = detalles;
     }
 
     public Ticket getTicket() {
@@ -65,28 +75,20 @@ public class Historial {
         this.ticket = ticket;
     }
 
-    public String getContenido() {
-        return contenido;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setContenido(String contenido) {
-        this.contenido = contenido;
-    }
-
-    public String getAccion() {
-        return accion;
-    }
-
-    public void setAccion(String accion) {
-        this.accion = accion;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override
     public String toString() {
         return "Historial{" +
                 "id=" + id +
-                ", accion='" + accion + '\'' +
-                ", contenido='" + contenido + '\'' +
+                ", fecha=" + fecha +
+                ", detalles='" + detalles + '\'' +
                 ", ticket=" + ticket +
                 ", usuario=" + usuario +
                 '}';
