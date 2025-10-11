@@ -7,5 +7,6 @@ import java.util.List;
 public interface ITicketService {
 
     public List<Ticket> verTodos();
+    public Ticket buscarPorId(int id);
 
 }
