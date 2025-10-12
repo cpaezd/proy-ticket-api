@@ -1,5 +1,6 @@
 package dam.proy.ticketing.app.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import dam.proy.ticketing.app.models.enums.VisibilidadTicket;
 import jakarta.persistence.*;
 
@@ -14,8 +15,7 @@ public class Anotacion {
     private int id;
 
     @Column(name="visibilidad")
-    @Enumerated(EnumType.STRING)
-    private VisibilidadTicket visibilidadTicket;
+    private int visibilidadTicket;
 
     @Column
     private String descripcion;
@@ -25,6 +25,7 @@ public class Anotacion {
 
     @ManyToOne
     @JoinColumn(name = "ticket")
+    @JsonBackReference
     private Ticket ticket;
 
     @ManyToOne
@@ -34,20 +35,20 @@ public class Anotacion {
     public Anotacion() {
     }
 
-    public Anotacion(int id, VisibilidadTicket visibilidadTicket, String descripcion, LocalDateTime fecha) {
-        this.id = id;
-        this.visibilidadTicket = visibilidadTicket;
-        this.descripcion = descripcion;
-        this.fecha = fecha;
-    }
-
-    public Anotacion(int id, Usuario usuario, Ticket ticket, LocalDateTime fecha, String descripcion, VisibilidadTicket visibilidadTicket) {
+    public Anotacion(int id, Usuario usuario, Ticket ticket, LocalDateTime fecha, String descripcion, int visibilidadTicket) {
         this.id = id;
         this.usuario = usuario;
         this.ticket = ticket;
         this.fecha = fecha;
         this.descripcion = descripcion;
         this.visibilidadTicket = visibilidadTicket;
+    }
+
+    public Anotacion(int id, int visibilidadTicket, String descripcion, LocalDateTime fecha) {
+        this.id = id;
+        this.visibilidadTicket = visibilidadTicket;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
     }
 
     public int getId() {
@@ -58,28 +59,12 @@ public class Anotacion {
         this.id = id;
     }
 
-    public VisibilidadTicket getVisibilidadTicket() {
-        return visibilidadTicket;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setVisibilidadTicket(VisibilidadTicket visibilidadTicket) {
-        this.visibilidadTicket = visibilidadTicket;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public LocalDateTime getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Ticket getTicket() {
@@ -90,12 +75,28 @@ public class Anotacion {
         this.ticket = ticket;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public LocalDateTime getFecha() {
+        return fecha;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public int getVisibilidadTicket() {
+        return visibilidadTicket;
+    }
+
+    public void setVisibilidadTicket(int visibilidadTicket) {
+        this.visibilidadTicket = visibilidadTicket;
     }
 
     @Override

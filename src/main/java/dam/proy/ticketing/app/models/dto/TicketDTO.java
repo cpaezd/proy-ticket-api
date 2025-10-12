@@ -1,146 +1,169 @@
 package dam.proy.ticketing.app.models.dto;
 
-import dam.proy.ticketing.app.models.Agente;
-import dam.proy.ticketing.app.models.Grupo;
-import dam.proy.ticketing.app.models.Solicitante;
-import dam.proy.ticketing.app.models.Ticket;
+import dam.proy.ticketing.app.models.Anotacion;
+import dam.proy.ticketing.app.models.Historial;
 import dam.proy.ticketing.app.models.enums.EstadoTicket;
 import dam.proy.ticketing.app.models.enums.ImpactoTicket;
 import dam.proy.ticketing.app.models.enums.PrioridadTicket;
 import dam.proy.ticketing.app.models.enums.UrgenciaTicket;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class TicketDTO
-{
-	private int ticketId;
-	private String asunto;
-	private String descripcion;
-	private LocalDateTime fechaCreacion;
-	private EstadoTicket estado;
-	private UrgenciaTicket urgencia;
-	private ImpactoTicket impacto;
-	private PrioridadTicket prioridad;
-	private String grupo;
-	private String agente;
-	private String solicitante;
+public class TicketDTO {
+    private int id;
+    private String asunto;
+    private String descripcion;
+    private LocalDateTime fechaCreacion;
+    private EstadoTicket estadoTicket;
+    private UrgenciaTicket urgencia;
+    private ImpactoTicket impacto;
+    private PrioridadTicket prioridad;
+    private String grupo;
+    private String tecnico;
+    private String solicitante;
+    private List<Historial> historiales;
+    private List<Anotacion> anotaciones;
 
-	public TicketDTO() {}
+    public TicketDTO() {
+    }
 
-	public TicketDTO(Ticket ticket, Solicitante solicitante, Grupo grupo, Agente agente)
-	{
-		this.ticketId = ticket.getId();
-		this.asunto = ticket.getAsunto();
-		this.descripcion = ticket.getDescripcion();
-		this.fechaCreacion = ticket.getFechaCreacion();
-		this.estado = ticket.getEstadoTicket();
-		this.urgencia = ticket.getUrgencia();
-		this.impacto = ticket.getImpacto();
-		this.prioridad = ticket.getPrioridad();
-		this.grupo = grupo.getNombre();
-		this.agente = agente.getUsuario().getNombre();
-		this.solicitante = solicitante.getUsuario().getNombre();
-	}
+    public TicketDTO(int id, List<Anotacion> anotaciones, List<Historial> historiales, String tecnico, String solicitante, String grupo, PrioridadTicket prioridad, ImpactoTicket impacto, UrgenciaTicket urgencia, EstadoTicket estadoTicket, LocalDateTime fechaCreacion, String descripcion, String asunto) {
+        this.id = id;
+        this.anotaciones = anotaciones;
+        this.historiales = historiales;
+        this.tecnico = tecnico;
+        this.solicitante = solicitante;
+        this.grupo = grupo;
+        this.prioridad = prioridad;
+        this.impacto = impacto;
+        this.urgencia = urgencia;
+        this.estadoTicket = estadoTicket;
+        this.fechaCreacion = fechaCreacion;
+        this.descripcion = descripcion;
+        this.asunto = asunto;
+    }
 
-	public TicketDTO(int ticketId, String asunto, String descripcion, LocalDateTime fechaCreacion, EstadoTicket estado, UrgenciaTicket urgencia, ImpactoTicket impacto, PrioridadTicket prioridad, String grupo, String agente, String solicitante) {
-		this.ticketId = ticketId;
-		this.asunto = asunto;
-		this.descripcion = descripcion;
-		this.fechaCreacion = fechaCreacion;
-		this.estado = estado;
-		this.urgencia = urgencia;
-		this.impacto = impacto;
-		this.prioridad = prioridad;
-		this.grupo = grupo;
-		this.agente = agente;
-		this.solicitante = solicitante;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public int getTicketId() {
-		return ticketId;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setTicketId(int ticketId) {
-		this.ticketId = ticketId;
-	}
+    public List<Anotacion> getAnotaciones() {
+        return anotaciones;
+    }
 
-	public String getAsunto() {
-		return asunto;
-	}
+    public void setAnotaciones(List<Anotacion> anotaciones) {
+        this.anotaciones = anotaciones;
+    }
 
-	public void setAsunto(String asunto) {
-		this.asunto = asunto;
-	}
+    public List<Historial> getHistoriales() {
+        return historiales;
+    }
 
-	public String getDescripcion() {
-		return descripcion;
-	}
+    public void setHistoriales(List<Historial> historiales) {
+        this.historiales = historiales;
+    }
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
+    public String getSolicitante() {
+        return solicitante;
+    }
 
-	public LocalDateTime getFechaCreacion() {
-		return fechaCreacion;
-	}
+    public void setSolicitante(String solicitante) {
+        this.solicitante = solicitante;
+    }
 
-	public void setFechaCreacion(LocalDateTime fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
-	}
+    public String getTecnico() {
+        return tecnico;
+    }
 
-	public EstadoTicket getEstado() {
-		return estado;
-	}
+    public void setTecnico(String tecnico) {
+        this.tecnico = tecnico;
+    }
 
-	public void setEstado(EstadoTicket estado) {
-		this.estado = estado;
-	}
+    public String getGrupo() {
+        return grupo;
+    }
 
-	public UrgenciaTicket getUrgencia() {
-		return urgencia;
-	}
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
 
-	public void setUrgencia(UrgenciaTicket urgencia) {
-		this.urgencia = urgencia;
-	}
+    public PrioridadTicket getPrioridad() {
+        return prioridad;
+    }
 
-	public ImpactoTicket getImpacto() {
-		return impacto;
-	}
+    public void setPrioridad(PrioridadTicket prioridad) {
+        this.prioridad = prioridad;
+    }
 
-	public void setImpacto(ImpactoTicket impacto) {
-		this.impacto = impacto;
-	}
+    public ImpactoTicket getImpacto() {
+        return impacto;
+    }
 
-	public PrioridadTicket getPrioridad() {
-		return prioridad;
-	}
+    public void setImpacto(ImpactoTicket impacto) {
+        this.impacto = impacto;
+    }
 
-	public void setPrioridad(PrioridadTicket prioridad) {
-		this.prioridad = prioridad;
-	}
+    public UrgenciaTicket getUrgencia() {
+        return urgencia;
+    }
 
-	public String getGrupo() {
-		return grupo;
-	}
+    public void setUrgencia(UrgenciaTicket urgencia) {
+        this.urgencia = urgencia;
+    }
 
-	public void setGrupo(String grupo) {
-		this.grupo = grupo;
-	}
+    public EstadoTicket getEstadoTicket() {
+        return estadoTicket;
+    }
 
-	public String getAgente() {
-		return agente;
-	}
+    public void setEstadoTicket(EstadoTicket estadoTicket) {
+        this.estadoTicket = estadoTicket;
+    }
 
-	public void setAgente(String agente) {
-		this.agente = agente;
-	}
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
 
-	public String getSolicitante() {
-		return solicitante;
-	}
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
 
-	public void setSolicitante(String solicitante) {
-		this.solicitante = solicitante;
-	}
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getAsunto() {
+        return asunto;
+    }
+
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
+    }
+
+    @Override
+    public String toString() {
+        return "TicketDTO{" +
+                "id=" + id +
+                ", asunto='" + asunto + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", fechaCreacion=" + fechaCreacion +
+                ", estadoTicket=" + estadoTicket +
+                ", urgencia=" + urgencia +
+                ", impacto=" + impacto +
+                ", prioridad=" + prioridad +
+                ", grupo='" + grupo + '\'' +
+                ", tecnico='" + tecnico + '\'' +
+                ", solicitante='" + solicitante + '\'' +
+                ", historiales=" + historiales +
+                ", anotaciones=" + anotaciones +
+                '}';
+    }
 }

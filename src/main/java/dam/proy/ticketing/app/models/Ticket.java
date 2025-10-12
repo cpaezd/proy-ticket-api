@@ -1,6 +1,7 @@
 package dam.proy.ticketing.app.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import dam.proy.ticketing.app.models.enums.EstadoTicket;
 import dam.proy.ticketing.app.models.enums.ImpactoTicket;
 import dam.proy.ticketing.app.models.enums.PrioridadTicket;
@@ -63,6 +64,7 @@ public class Ticket {
     private List<Historial> historiales;
 
     @OneToMany(mappedBy = "ticket")
+    @JsonManagedReference
     private List<Anotacion> anotaciones;
 
     public Ticket() {

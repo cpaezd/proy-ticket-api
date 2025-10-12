@@ -17,12 +17,14 @@ class UsuarioController {
     @Autowired
     private IUsuarioService usuarioService;
 
+    // ------- VER TODOS LOS USUARIOS
     @GetMapping("/usuarios")
     public ResponseEntity<List<Usuario>> getUsuarios()
     {
         return null;
     }
 
+    // -------- VER UN USUARIO POR ID ---------
     @GetMapping("/usuarios/{id}")
     public ResponseEntity<Usuario> getUsuario(@PathVariable String id)
     {

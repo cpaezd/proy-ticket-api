@@ -1,6 +1,7 @@
 package dam.proy.ticketing.app.controllers;
 
 import dam.proy.ticketing.app.models.Ticket;
+import dam.proy.ticketing.app.models.dto.TicketDTO;
 import dam.proy.ticketing.app.services.interfaces.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,14 @@ class TicketController {
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al obtener los tickets para agente: " + e.getMessage());
         }
+    }
+
+    // ---------- VER TICKET POR ID ----------
+
+    @GetMapping("{id}")
+    public ResponseEntity<TicketDTO> verTicketPorId(@PathVariable int id){
+        TicketDTO ticketDTO = ticketService.buscarPorId(id);
+        return ResponseEntity.ok(ticketDTO);
     }
 
 
