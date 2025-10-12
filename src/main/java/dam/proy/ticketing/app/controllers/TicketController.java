@@ -15,8 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/ticket")
 class TicketController {
+
     @Autowired
     private ITicketService ticketService;
+
 
     // --------- VER TODOS LOS TICKETS -------
     @GetMapping()
@@ -33,8 +35,5 @@ class TicketController {
         }
     }
 
-    @GetMapping("/{ticket}/anotaciones")
-    public ResponseEntity<?> getAnotacionesByTicket(@PathVariable String ticket){
-        return null;
-    }
+
 }
