@@ -27,6 +27,12 @@ public class TicketDTO {
 
     public TicketDTO() {
     }
+    public TicketDTO(int id, String asunto, String descripcion, String solicitante) {
+        this.id = id;
+        this.asunto = asunto;
+        this.descripcion = descripcion;
+        this.solicitante = solicitante;
+    }
 
     public TicketDTO(int id, List<Anotacion> anotaciones, List<Historial> historiales, String tecnico, String solicitante, String grupo, PrioridadTicket prioridad, ImpactoTicket impacto, UrgenciaTicket urgencia, EstadoTicket estadoTicket, LocalDateTime fechaCreacion, String descripcion, String asunto) {
         this.id = id;

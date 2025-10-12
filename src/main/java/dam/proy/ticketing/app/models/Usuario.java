@@ -1,7 +1,6 @@
 package dam.proy.ticketing.app.models;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -43,7 +42,7 @@ public class Usuario {
         this.password = password;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

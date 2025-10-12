@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->auth
                         .requestMatchers("/usuario/login").permitAll()
+                        .requestMatchers("/api/admin/**").permitAll()                                               // <--- permitir admin sin JWT
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter,UsernamePasswordAuthenticationFilter.class)
                 .build();
