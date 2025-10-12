@@ -61,6 +61,7 @@ public class Ticket {
     private Agente agente;
 
     @OneToMany(mappedBy = "ticket")
+    @JsonManagedReference
     private List<Historial> historiales;
 
     @OneToMany(mappedBy = "ticket")

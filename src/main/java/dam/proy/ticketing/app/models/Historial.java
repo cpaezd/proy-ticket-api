@@ -1,5 +1,6 @@
 package dam.proy.ticketing.app.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public class Historial {
 
     @ManyToOne
     @JoinColumn(name = "ticket")
+    @JsonBackReference
     private Ticket ticket;
 
     @ManyToOne
