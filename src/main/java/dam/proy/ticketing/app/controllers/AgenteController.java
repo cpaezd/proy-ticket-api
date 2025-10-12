@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/agente")
 public class AgenteController {
-
     @Autowired
     private IAgenteService agenteService;
 }

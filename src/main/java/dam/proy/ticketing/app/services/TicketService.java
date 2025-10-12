@@ -10,14 +10,26 @@ import java.util.List;
 
 @Service
 public class TicketService implements ITicketService {
-
     @Autowired
     private TicketRepository ticketRepository;
 
     @Override
     public List<Ticket> verTodos() {
-
        return ticketRepository.findAll();
+    }
 
+    @Override
+    public Ticket getTicket(int ticket) {
+        return null;
+    }
+
+    @Override
+    public List<Ticket> getTicketsBySolicitante(int solicitante) {
+        return List.of();
+    }
+
+    @Override
+    public List<Ticket> getTicketsByGrupo(int Grupo) {
+        return List.of();
     }
 }

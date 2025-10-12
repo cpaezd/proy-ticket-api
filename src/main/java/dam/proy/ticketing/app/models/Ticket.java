@@ -1,6 +1,9 @@
 package dam.proy.ticketing.app.models;
 
 import dam.proy.ticketing.app.models.enums.EstadoTicket;
+import dam.proy.ticketing.app.models.enums.ImpactoTicket;
+import dam.proy.ticketing.app.models.enums.PrioridadTicket;
+import dam.proy.ticketing.app.models.enums.UrgenciaTicket;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -29,13 +32,16 @@ public class Ticket {
     private EstadoTicket estadoTicket;
 
     @Column
-    private String urgencia;
+    @Enumerated(EnumType.STRING)
+    private UrgenciaTicket urgencia;
 
     @Column
-    private String impacto;
+    @Enumerated(EnumType.STRING)
+    private ImpactoTicket impacto;
 
     @Column
-    private String prioridad;
+    @Enumerated(EnumType.STRING)
+    private PrioridadTicket prioridad;
 
     @ManyToOne
     @JoinColumn(name = "grupo")
@@ -58,7 +64,11 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(int id, String asunto, String descripcion, LocalDateTime fechaCreacion, EstadoTicket estadoTicket, String urgencia, String impacto, String prioridad) {
+    public Ticket(int id) {
+        this.id = id;
+    }
+
+    public Ticket(int id, String asunto, String descripcion, LocalDateTime fechaCreacion, EstadoTicket estadoTicket, UrgenciaTicket urgencia, ImpactoTicket impacto, PrioridadTicket prioridad) {
         this.id = id;
         this.asunto = asunto;
         this.descripcion = descripcion;
@@ -69,7 +79,7 @@ public class Ticket {
         this.prioridad = prioridad;
     }
 
-    public Ticket(int id, List<Anotacion> anotaciones, List<Historial> historiales, Agente agente, Solicitante solicitante, Grupo grupo, String prioridad, String impacto, String urgencia, EstadoTicket estadoTicket, LocalDateTime fechaCreacion, String descripcion, String asunto) {
+    public Ticket(int id, List<Anotacion> anotaciones, List<Historial> historiales, Agente agente, Solicitante solicitante, Grupo grupo, PrioridadTicket prioridad, ImpactoTicket impacto, UrgenciaTicket urgencia, EstadoTicket estadoTicket, LocalDateTime fechaCreacion, String descripcion, String asunto) {
         this.id = id;
         this.anotaciones = anotaciones;
         this.historiales = historiales;
@@ -125,27 +135,27 @@ public class Ticket {
         this.estadoTicket = estadoTicket;
     }
 
-    public String getUrgencia() {
+    public UrgenciaTicket getUrgencia() {
         return urgencia;
     }
 
-    public void setUrgencia(String urgencia) {
+    public void setUrgencia(UrgenciaTicket urgencia) {
         this.urgencia = urgencia;
     }
 
-    public String getImpacto() {
+    public ImpactoTicket getImpacto() {
         return impacto;
     }
 
-    public void setImpacto(String impacto) {
+    public void setImpacto(ImpactoTicket impacto) {
         this.impacto = impacto;
     }
 
-    public String getPrioridad() {
+    public PrioridadTicket getPrioridad() {
         return prioridad;
     }
 
-    public void setPrioridad(String prioridad) {
+    public void setPrioridad(PrioridadTicket prioridad) {
         this.prioridad = prioridad;
     }
 

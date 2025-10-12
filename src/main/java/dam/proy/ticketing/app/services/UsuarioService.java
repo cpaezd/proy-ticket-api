@@ -26,7 +26,6 @@ public class UsuarioService implements IUsuarioService {
         Usuario usuario1 = usuarioRepository.findByEmail(usuario.getEmail());
 
         if(usuario1 != null && passwordEncoder.matches(usuario.getPassword(),usuario1.getPassword())&& usuario1.isActivo()==true){
-
             String token = jwtUtil.generarToken(usuario1.getEmail());
 
             LoginResponseDTO usuario2 = new LoginResponseDTO();
@@ -39,8 +38,6 @@ public class UsuarioService implements IUsuarioService {
             usuario2.setEmail(usuario1.getEmail());
 
             return usuario2;
-
-
         }
 
         return null;
