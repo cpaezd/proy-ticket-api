@@ -23,7 +23,7 @@ public class Solicitante {
     private String cif;
 
     @OneToMany(mappedBy = "solicitante")
-    @JsonManagedReference
+    @JsonManagedReference("ticket-solicitante")
     private List<Ticket> tickets;
 
     //Aqui para poder hacer la herencia al tener una clave que se comporta como PK y FK a su vez necesitamos agregar la etiqueta MapsId

@@ -47,17 +47,17 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "grupo")
-    @JsonBackReference
+    @JsonBackReference("ticket-grupo")
     private Grupo grupo;
 
     @ManyToOne
     @JoinColumn(name="solicitante")
-    @JsonBackReference
+    @JsonBackReference("ticket-solicitante")
     private Solicitante solicitante;
 
     @ManyToOne
     @JoinColumn(name = "tecnico")
-    @JsonBackReference
+    @JsonBackReference("ticket-agente")
     private Agente agente;
 
     @OneToMany(mappedBy = "ticket")

@@ -6,10 +6,7 @@ import dam.proy.ticketing.app.services.interfaces.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,6 +39,13 @@ class TicketController {
     public ResponseEntity<TicketDTO> verTicketPorId(@PathVariable int id){
         TicketDTO ticketDTO = ticketService.buscarPorId(id);
         return ResponseEntity.ok(ticketDTO);
+    }
+
+    // -------------  EDITAR TICKET -------
+
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<Ticket> editarTicket(@PathVariable int id, @RequestBody Ticket ticket){
+        return (new ResponseEntity<Ticket>(ticketService.editarTicket(id,ticket),HttpStatus.OK));
     }
 
 

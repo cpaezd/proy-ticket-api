@@ -24,7 +24,7 @@ public class Grupo {
     private List<Agente> agentes;
 
     @OneToMany(mappedBy = "grupo")
-    @JsonManagedReference
+    @JsonManagedReference("ticket-grupo")
     private List<Ticket> tickets;
 
     public Grupo() {

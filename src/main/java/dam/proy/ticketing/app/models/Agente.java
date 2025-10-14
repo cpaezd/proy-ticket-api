@@ -20,7 +20,7 @@ public class Agente {
     private Grupo grupo;
 
     @OneToMany(mappedBy = "agente")
-    @JsonManagedReference
+    @JsonManagedReference("ticket-agente")
     private List<Ticket> tickets;
 
     //Al tener herencia de usuario necesitamos agregar la etiqueta MasId a la relación OnetoOne

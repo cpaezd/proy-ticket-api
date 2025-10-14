@@ -9,5 +9,6 @@ public interface ITicketService {
 
     public List<Ticket> verTodos();
     public TicketDTO buscarPorId(int id);
+    public Ticket editarTicket(int id, Ticket ticket);
 
 }

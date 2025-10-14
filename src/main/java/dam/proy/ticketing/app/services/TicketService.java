@@ -88,4 +88,44 @@ public class TicketService implements ITicketService {
 
 
     }
+
+    @Override
+    public Ticket editarTicket(int id, Ticket ticket) {
+        Ticket ticket1 = ticketRepository.findById(id).orElse(null);
+
+        if(ticket.getAsunto() != null){
+            ticket1.setAsunto(ticket.getAsunto());
+        }
+
+        if(ticket.getDescripcion() != null){
+            ticket1.setDescripcion(ticket.getDescripcion());
+        }
+
+        if(ticket.getFechaCreacion() != null){
+            ticket1.setFechaCreacion(ticket.getFechaCreacion());
+        }
+
+        if(ticket.getEstadoTicket() != null){
+            ticket1.setEstadoTicket(ticket.getEstadoTicket());
+        }
+        if(ticket.getUrgencia() != null){
+            ticket1.setUrgencia(ticket.getUrgencia());
+        }
+
+        if(ticket.getImpacto() != null){
+            ticket1.setImpacto(ticket.getImpacto());
+        }
+        if(ticket.getPrioridad() != null){
+            ticket1.setPrioridad(ticket.getPrioridad());
+        }
+
+        if (ticket.getGrupo() != null && ticket.getGrupo().getNombre() != null) {
+            Grupo nuevoGrupo = grupoRepository.findByNombre(ticket.getGrupo().getNombre());
+            if (nuevoGrupo != null) {
+                ticket1.setGrupo(nuevoGrupo);
+            }
+        }
+        return ticketRepository.save(ticket1);
+
+    }
 }
