@@ -1,18 +1,13 @@
 package dam.proy.ticketing.app.services;
 
-import dam.proy.ticketing.app.models.Agente;
-import dam.proy.ticketing.app.models.Grupo;
-import dam.proy.ticketing.app.models.Solicitante;
-import dam.proy.ticketing.app.models.Ticket;
+import dam.proy.ticketing.app.models.*;
 import dam.proy.ticketing.app.models.dto.TicketDTO;
-import dam.proy.ticketing.app.repositories.AgenteRepository;
-import dam.proy.ticketing.app.repositories.GrupoRepository;
-import dam.proy.ticketing.app.repositories.SolicitanteRepository;
-import dam.proy.ticketing.app.repositories.TicketRepository;
+import dam.proy.ticketing.app.repositories.*;
 import dam.proy.ticketing.app.services.interfaces.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,6 +22,10 @@ public class TicketService implements ITicketService {
     private AgenteRepository agenteRepository;
     @Autowired
     private SolicitanteRepository solicitanteRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    private HistorialRepository historialRepository;
 
     @Override
     public List<Ticket> verTodos() {
@@ -90,7 +89,7 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public Ticket editarTicket(int id, Ticket ticket) {
+    public Ticket editarTicket(int id, Ticket ticket, String email) {
         Ticket ticket1 = ticketRepository.findById(id).orElse(null);
 
         if(ticket.getAsunto() != null){
@@ -125,7 +124,17 @@ public class TicketService implements ITicketService {
                 ticket1.setGrupo(nuevoGrupo);
             }
         }
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        Historial historial = new Historial();
+        historial.setTicket(ticket1);
+        historial.setFecha(LocalDateTime.now());
+        historial.setDetalles("Ha editado el ticket");
+        historial.setUsuario(usuario);
+        historialRepository.save(historial);
         return ticketRepository.save(ticket1);
-
     }
+
+
+
+
 }

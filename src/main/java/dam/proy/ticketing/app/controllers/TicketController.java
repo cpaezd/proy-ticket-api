@@ -1,6 +1,7 @@
 package dam.proy.ticketing.app.controllers;
 
 import dam.proy.ticketing.app.models.Ticket;
+import dam.proy.ticketing.app.models.Usuario;
 import dam.proy.ticketing.app.models.dto.TicketDTO;
 import dam.proy.ticketing.app.services.interfaces.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -41,10 +43,14 @@ class TicketController {
         return ResponseEntity.ok(ticketDTO);
     }
 
+
+
     // -------------  EDITAR TICKET -------
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<Ticket> editarTicket(@PathVariable int id, @RequestBody Ticket ticket){
-        return (new ResponseEntity<Ticket>(ticketService.editarTicket(id,ticket),HttpStatus.OK));
+    public ResponseEntity<Ticket> editarTicket(@PathVariable int id, @RequestBody Ticket ticket, Principal principal) {
+        String emailUsuario = principal.getName(); // ← obtiene el email del usuario autenticado
+        Ticket actualizado = ticketService.editarTicket(id, ticket, emailUsuario);
+        return new ResponseEntity<>(actualizado, HttpStatus.OK);
     }
 }

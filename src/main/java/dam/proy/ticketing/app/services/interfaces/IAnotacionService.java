@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface IAnotacionService {
 	List<Anotacion> getAnotacionesByTicket(Ticket ticket);
+	public void borrarPorId(int id,String email);
 }

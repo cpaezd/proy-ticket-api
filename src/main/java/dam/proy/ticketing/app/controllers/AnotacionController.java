@@ -5,10 +5,9 @@ import dam.proy.ticketing.app.models.Ticket;
 import dam.proy.ticketing.app.services.interfaces.IAnotacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,5 +24,12 @@ public class AnotacionController {
             return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(anotaciones);
+    }
+
+    @DeleteMapping("/borrar/{id}")
+    public ResponseEntity<?> borrarAnotacion(@PathVariable int id, Principal principal){
+        String email = principal.getName();
+        anotacionService.borrarPorId(id, email);
+        return ResponseEntity.ok().build();
     }
 }
