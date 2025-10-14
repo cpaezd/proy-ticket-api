@@ -12,21 +12,21 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000") // Ajusta si React corre en otro puerto
 public class AdminController {
 
-    private final AdminService adminService;
-
-    public AdminController(AdminService adminService) {
-        this.adminService = adminService;
-    }
-
-    // Endpoint para obtener usuarios con tickets abiertos
-    @GetMapping("/usuarios-con-tickets")
-    public List<UsuarioDTO> getUsuariosConTickets() {
-        return adminService.obtenerUsuariosConTicketsAbiertos();
-    }
-
-    // Endpoint para obtener tickets de un usuario concreto
-    @GetMapping("/usuarios/{id}/tickets")
-    public List<TicketDTO> getTicketsPorUsuario(@PathVariable Long id) {
-        return adminService.obtenerTicketsPorUsuario(id);
-    }
+//    private final AdminService adminService;
+//
+//    public AdminController(AdminService adminService) {
+//        this.adminService = adminService;
+//    }
+//
+//    // Endpoint para obtener usuarios con tickets abiertos
+//    @GetMapping("/usuarios-con-tickets")
+//    public List<UsuarioDTO> getUsuariosConTickets() {
+//        return adminService.obtenerUsuariosConTicketsAbiertos();
+//    }
+//
+//    // Endpoint para obtener tickets de un usuario concreto
+//    @GetMapping("/usuarios/{id}/tickets")
+//    public List<TicketDTO> getTicketsPorUsuario(@PathVariable Long id) {
+//        return adminService.obtenerTicketsPorUsuario(id);
+//    }
 }

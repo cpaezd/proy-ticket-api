@@ -2,37 +2,59 @@ package dam.proy.ticketing.app.models.dto;
 
 public class UsuarioDTO {
 
-    private Long id;
+    private int id;
     private String nombre;
     private String apellido;
     private String email;
-    private Long totalTickets;
+    private boolean activo;
 
-    public UsuarioDTO() {
+    public UsuarioDTO() {}
 
-    }
-
-    public UsuarioDTO(Long id, String nombre, String apellido, String email, Long totalTickets) {
+    public UsuarioDTO(int id, String nombre, String apellido, String email, boolean activo) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
-        this.totalTickets = totalTickets;
+        this.activo = activo;
     }
 
-    // Getters y setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getApellido() { return apellido; }
-    public void setApellido(String apellido) { this.apellido = apellido; }
+    public String getNombre() {
+        return nombre;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-    public Long getTotalTickets() { return totalTickets; }
-    public void setTotalTickets(Long totalTickets) { this.totalTickets = totalTickets; }
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 }

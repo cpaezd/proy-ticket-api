@@ -18,10 +18,10 @@ class UsuarioController {
     private IUsuarioService usuarioService;
 
     // ------- VER TODOS LOS USUARIOS
-    @GetMapping("/usuarios")
-    public ResponseEntity<List<Usuario>> getUsuarios()
+    @GetMapping("/")
+    public ResponseEntity<?> getUsuarios()
     {
-        return null;
+        return ResponseEntity.ok(this.usuarioService.getUsuarios());
     }
 
     // -------- VER UN USUARIO POR ID ---------

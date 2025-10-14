@@ -47,6 +47,4 @@ class TicketController {
     public ResponseEntity<Ticket> editarTicket(@PathVariable int id, @RequestBody Ticket ticket){
         return (new ResponseEntity<Ticket>(ticketService.editarTicket(id,ticket),HttpStatus.OK));
     }
-
-
 }
