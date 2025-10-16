@@ -9,4 +9,6 @@ public interface IAnotacionService {
 	List<Anotacion> getAnotacionesByTicket(Ticket ticket);
 	public void borrarPorId(int id,String email);
 	public void editarPorId(int id, String descripcion,String email);
+	public void crearAnotacion(Anotacion anotacion, String email);
+
 }

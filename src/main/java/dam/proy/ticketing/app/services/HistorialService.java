@@ -10,4 +10,6 @@ public class HistorialService implements IHistorialService {
 
     @Autowired
     private HistorialRepository historialRepository;
+
+
 }

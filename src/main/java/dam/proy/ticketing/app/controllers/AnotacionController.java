@@ -43,4 +43,15 @@ public class AnotacionController {
         return ResponseEntity.ok().build();
 
     }
+
+    // -------- CREAR UN MENSAJE -----------
+
+    @PostMapping("crear")
+    public ResponseEntity<?> crearMensaje(@RequestBody Anotacion anotacion, Principal principal){
+        String email = principal.getName();
+        anotacionService.crearAnotacion(anotacion,email);
+        return  ResponseEntity.ok().build();
+    }
+
+
 }

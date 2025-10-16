@@ -4,12 +4,16 @@ import dam.proy.ticketing.app.models.Anotacion;
 import dam.proy.ticketing.app.models.Historial;
 import dam.proy.ticketing.app.models.Ticket;
 import dam.proy.ticketing.app.models.Usuario;
+import dam.proy.ticketing.app.models.enums.EstadoTicket;
 import dam.proy.ticketing.app.repositories.AnotacionRepository;
 import dam.proy.ticketing.app.repositories.HistorialRepository;
+import dam.proy.ticketing.app.repositories.TicketRepository;
 import dam.proy.ticketing.app.repositories.UsuarioRepository;
 import dam.proy.ticketing.app.services.interfaces.IAnotacionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,7 +27,9 @@ public class AnotacionService implements IAnotacionService {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    HistorialRepository historialRepository;
+    private HistorialRepository historialRepository;
+    @Autowired
+    private TicketRepository ticketRepository;
 
     @Override
     public List<Anotacion> getAnotacionesByTicket(Ticket ticket) {
@@ -76,7 +82,41 @@ public class AnotacionService implements IAnotacionService {
         historial.setFecha(LocalDateTime.now());
         historial.setDetalles("ha editado un mensaje");
         historialRepository.save(historial);
-
-
     }
+
+    @Override
+    public void crearAnotacion(Anotacion anotacion, String email) {
+
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        Ticket ticket = ticketRepository.findById(anotacion.getTicket().getId()).orElse(null);
+
+        //Aqui le decimos que si ese ticket no tiene un tecnico asignado no se pueda crear un mensaje privado no tendria sentido no iria a ningun lado ese mensaje.
+        if (anotacion.getVisibilidadTicket() == 0 && ticket.getGrupo() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se puede crear una anotación privada sin grupo asignado");
+        }
+
+
+        anotacion.setUsuario(usuario);
+        anotacion.setTicket(ticket);
+        anotacion.setFecha(LocalDateTime.now());
+
+
+        anotacionRepository.save(anotacion);
+
+        //Aqui le digo que si ticket esta abierto y un agente escribe una anotacion en ese ticket cambie su estado de Abierto a Pendiente.
+        if(usuario.getPerfil().getNombre().equalsIgnoreCase("AGENTE") && ticket.getEstadoTicket() == EstadoTicket.ABIERTO){
+            ticket.setEstadoTicket(EstadoTicket.PENDIENTE);
+            ticketRepository.save(ticket);
+        }
+
+        Historial historial = new Historial();
+        historial.setTicket(ticket);
+        historial.setUsuario(usuario);
+        historial.setFecha(LocalDateTime.now());
+        historial.setDetalles("ha escrito un mensaje");
+
+        historialRepository.save(historial);
+    }
+
+
 }
