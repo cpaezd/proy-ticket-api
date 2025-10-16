@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ITicketService {
 
-    public List<Ticket> verTodos();
+    public List<Ticket> verActivos();
     public TicketDTO buscarPorId(int id);
     public Ticket editarTicket(int id, Ticket ticket, String email);
 

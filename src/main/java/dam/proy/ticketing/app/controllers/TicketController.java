@@ -20,11 +20,11 @@ class TicketController {
     private ITicketService ticketService;
 
 
-    // --------- VER TODOS LOS TICKETS -------
+    // --------- VER TODOS LOS TICKETS QUE NO TIENEN EL ESTADO RESUELTO O CERRADO  -------
     @GetMapping()
-    public ResponseEntity<?> verTodosLosTicket (){
+    public ResponseEntity<?> verTodosLosTicketActivos (){
         try{
-            List<Ticket> tickets = ticketService.verTodos();
+            List<Ticket> tickets = ticketService.verActivos();
 
             if(tickets.isEmpty()){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay tickets");

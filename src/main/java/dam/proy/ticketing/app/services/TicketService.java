@@ -2,12 +2,14 @@ package dam.proy.ticketing.app.services;
 
 import dam.proy.ticketing.app.models.*;
 import dam.proy.ticketing.app.models.dto.TicketDTO;
+import dam.proy.ticketing.app.models.enums.EstadoTicket;
 import dam.proy.ticketing.app.repositories.*;
 import dam.proy.ticketing.app.services.interfaces.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,10 +30,18 @@ public class TicketService implements ITicketService {
     private HistorialRepository historialRepository;
 
     @Override
-    public List<Ticket> verTodos() {
+    public List<Ticket> verActivos() {
 
-       return ticketRepository.findAll();
+        List<Ticket> todos = ticketRepository.findAll();
+        List<Ticket> activos = new ArrayList<>();
 
+        for(Ticket item : todos){
+
+            if(item.getEstadoTicket() != EstadoTicket.RESUELTO && item.getEstadoTicket() != EstadoTicket.CERRADO){
+                activos.add(item);
+            }
+        }
+        return activos;
     }
 
     @Override
