@@ -53,4 +53,30 @@ public class AnotacionService implements IAnotacionService {
 
 
     }
+
+    @Override
+    public void editarPorId(int id, String nuevaDescripcion,String email) {
+
+        Anotacion anotacion = anotacionRepository.findById(id).orElse(null);
+
+        if(anotacion == null){
+            return;
+        }
+
+        anotacion.setDescripcion(nuevaDescripcion);
+        anotacion.setFecha(LocalDateTime.now());
+        anotacionRepository.save(anotacion);
+
+        Ticket ticket = anotacion.getTicket();
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        Historial historial = new Historial();
+        historial.setTicket(ticket);
+        historial.setUsuario(usuario);
+        historial.setFecha(LocalDateTime.now());
+        historial.setDetalles("ha editado un mensaje");
+        historialRepository.save(historial);
+
+
+    }
 }

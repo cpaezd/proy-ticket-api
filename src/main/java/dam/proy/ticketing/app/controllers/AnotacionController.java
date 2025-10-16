@@ -26,10 +26,21 @@ public class AnotacionController {
         return ResponseEntity.ok(anotaciones);
     }
 
+    // -------- BORRAR UN MENSAJE POR ID ----------
     @DeleteMapping("/borrar/{id}")
     public ResponseEntity<?> borrarAnotacion(@PathVariable int id, Principal principal){
         String email = principal.getName();
         anotacionService.borrarPorId(id, email);
         return ResponseEntity.ok().build();
+    }
+
+    // ------- EDITAR UN MENSAJE POR ID --------------------
+
+    @PutMapping("editar/{id}")
+    public ResponseEntity<?> editarAnotacion(@PathVariable int id, @RequestBody String nuevaDescripcion, Principal principal){
+        String email = principal.getName();
+        anotacionService.editarPorId(id,nuevaDescripcion,email);
+        return ResponseEntity.ok().build();
+
     }
 }
