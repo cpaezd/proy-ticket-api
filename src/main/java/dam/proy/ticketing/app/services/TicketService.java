@@ -134,7 +134,8 @@ public class TicketService implements ITicketService {
                 ticket1.setGrupo(nuevoGrupo);
             }
         }
-        Usuario usuario = usuarioRepository.findByEmail(email);
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con email: " + email));
         Historial historial = new Historial();
         historial.setTicket(ticket1);
         historial.setFecha(LocalDateTime.now());

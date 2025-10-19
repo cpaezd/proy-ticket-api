@@ -1,19 +1,14 @@
 package dam.proy.ticketing.app.repositories;
 
-import dam.proy.ticketing.app.models.Solicitante;
 import dam.proy.ticketing.app.models.Usuario;
-import dam.proy.ticketing.app.models.dto.UsuarioDTO;
-import dam.proy.ticketing.app.models.enums.EstadoTicket;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import java.util.Optional; // 👈 1. Importa esto
 
-import java.util.List;
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
-public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
-
-    Usuario findByEmail(String email);
-
-
-
+    /**
+     * Devuelve Optional<Usuario>
+     * Esto es crucial para que el service maneje si un usuario no existe.
+     */
+    Optional<Usuario> findByEmail(String email);
 }

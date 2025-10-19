@@ -45,7 +45,8 @@ public class AnotacionService implements IAnotacionService {
         }
 
         Ticket ticket = anotacion.getTicket();
-        Usuario usuario = usuarioRepository.findByEmail(email);
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con email: " + email));
 
         Historial historial = new Historial();
 
@@ -74,7 +75,8 @@ public class AnotacionService implements IAnotacionService {
         anotacionRepository.save(anotacion);
 
         Ticket ticket = anotacion.getTicket();
-        Usuario usuario = usuarioRepository.findByEmail(email);
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con email: " + email));
 
         Historial historial = new Historial();
         historial.setTicket(ticket);
@@ -87,7 +89,8 @@ public class AnotacionService implements IAnotacionService {
     @Override
     public void crearAnotacion(Anotacion anotacion, String email) {
 
-        Usuario usuario = usuarioRepository.findByEmail(email);
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con email: " + email));
         Ticket ticket = ticketRepository.findById(anotacion.getTicket().getId()).orElse(null);
 
         //Aqui le decimos que si ese ticket no tiene un tecnico asignado no se pueda crear un mensaje privado no tendria sentido no iria a ningun lado ese mensaje.

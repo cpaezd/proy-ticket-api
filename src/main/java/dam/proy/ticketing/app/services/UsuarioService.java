@@ -25,30 +25,37 @@ public class UsuarioService implements IUsuarioService {
     //LOGIN
     @Override
     public LoginResponseDTO autentificar(Usuario usuario) {
-        Usuario usuario1 = usuarioRepository.findByEmail(usuario.getEmail());
+        java.util.Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(usuario.getEmail());
 
-        if(usuario1 != null && passwordEncoder.matches(usuario.getPassword(),usuario1.getPassword())&& usuario1.isActivo()==true){
-            String token = jwtUtil.generarToken(usuario1.getEmail());
 
-            LoginResponseDTO usuario2 = new LoginResponseDTO();
+        if (usuarioOptional.isPresent()) {
 
-            usuario2.setToken(token);
-            usuario2.setId_perfil(usuario1.getPerfil().getId());
-            usuario2.setNombre_perfil(usuario1.getPerfil().getNombre());
-            usuario2.setNombre(usuario1.getNombre());
-            usuario2.setApellidos(usuario1.getApellidos());
-            usuario2.setEmail(usuario1.getEmail());
 
-            return usuario2;
+            Usuario usuario1 = usuarioOptional.get();
+
+
+            if (passwordEncoder.matches(usuario.getPassword(), usuario1.getPassword())) {
+
+                String token = jwtUtil.generarToken(usuario1.getEmail());
+                LoginResponseDTO usuario2 = new LoginResponseDTO();
+                usuario2.setToken(token);
+                usuario2.setId_perfil(usuario1.getPerfil().getId());
+                usuario2.setNombre_perfil(usuario1.getPerfil().getNombre());
+
+                return usuario2;
+            }
         }
+
 
         return null;
     }
 
-    //Lo usamos en Jwt
+
     @Override
     public Usuario buscarPorEmail(String email) {
-        return usuarioRepository.findByEmail(email);
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con email: " + email));;
+        return usuario;
     }
 
     @Override

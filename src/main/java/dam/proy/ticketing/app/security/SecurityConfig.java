@@ -35,7 +35,9 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->auth
                         .requestMatchers("/usuario/login").permitAll()
-                        .requestMatchers("/api/admin/**").permitAll()                                               // <--- permitir admin sin JWT
+                        .requestMatchers("/api/admin/**").permitAll()
+                        .requestMatchers("/api/solicitante/**").permitAll()
+
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter,UsernamePasswordAuthenticationFilter.class)
                 .build();
@@ -50,7 +52,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOriginPattern("*");
+        config.addAllowedOrigin("http://localhost:5173");
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Content-Type", "Authorization"));
         config.setAllowCredentials(true);
