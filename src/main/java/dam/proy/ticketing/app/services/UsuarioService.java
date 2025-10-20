@@ -41,6 +41,9 @@ public class UsuarioService implements IUsuarioService {
                 usuario2.setToken(token);
                 usuario2.setId_perfil(usuario1.getPerfil().getId());
                 usuario2.setNombre_perfil(usuario1.getPerfil().getNombre());
+                usuario2.setNombre(usuario1.getNombre());
+                usuario2.setApellidos(usuario1.getApellidos());
+                usuario2.setEmail(usuario1.getEmail());
 
                 return usuario2;
             }
