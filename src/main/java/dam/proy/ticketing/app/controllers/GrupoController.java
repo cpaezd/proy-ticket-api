@@ -1,6 +1,7 @@
 package dam.proy.ticketing.app.controllers;
 
 import dam.proy.ticketing.app.models.Grupo;
+import dam.proy.ticketing.app.models.dto.GrupoResponseDTO;
 import dam.proy.ticketing.app.services.interfaces.IGrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class GrupoController {
 
     // --------- VER TODOS LOS TIPOS DE GRUPO QUE HAY -----------------
     @GetMapping("/nombres")
-    public ResponseEntity<List<String>> verNombresGrupo(){
-        return  new ResponseEntity<>(grupoService.verNombres(), HttpStatus.OK);
+    public ResponseEntity<List<GrupoResponseDTO>> verTodosGrupos(){
+        return  new ResponseEntity<>(grupoService.verGrupos(), HttpStatus.OK);
     }
 }

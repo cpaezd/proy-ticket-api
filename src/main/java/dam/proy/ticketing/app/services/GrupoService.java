@@ -1,6 +1,7 @@
 package dam.proy.ticketing.app.services;
 
 import dam.proy.ticketing.app.models.Grupo;
+import dam.proy.ticketing.app.models.dto.GrupoResponseDTO;
 import dam.proy.ticketing.app.repositories.GrupoRepository;
 import dam.proy.ticketing.app.services.interfaces.IGrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +17,21 @@ public class GrupoService implements IGrupoService {
     private GrupoRepository grupoRepository;
 
     @Override
-    public List<String> verNombres() {
+    public List<GrupoResponseDTO> verGrupos() {
        List<Grupo> grupos =  grupoRepository.findAll();
-       List<String> nombreGrupos = new ArrayList<>();
+       List<GrupoResponseDTO> respuesta = new ArrayList<>();
 
        for(Grupo item: grupos){
-           item.getNombre();
-           nombreGrupos.add(item.getNombre());
+           GrupoResponseDTO grupoResponseDTO = new GrupoResponseDTO();
+
+           grupoResponseDTO.setId(item.getId());
+           grupoResponseDTO.setNombre(item.getNombre());
+
+           respuesta.add(grupoResponseDTO);
        }
 
-       return nombreGrupos;
+
+       return respuesta;
     }
 }
 

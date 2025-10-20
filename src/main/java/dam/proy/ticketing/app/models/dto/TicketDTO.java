@@ -24,6 +24,8 @@ public class TicketDTO {
     private String solicitante;
     private List<Historial> historiales;
     private List<Anotacion> anotaciones;
+    private int id_grupo;
+    private int id_tecnico;
 
     public TicketDTO() {
     }
@@ -34,24 +36,42 @@ public class TicketDTO {
         this.solicitante = solicitante;
     }
 
-    public TicketDTO(int id, List<Anotacion> anotaciones, List<Historial> historiales, String tecnico, String solicitante, String grupo, PrioridadTicket prioridad, ImpactoTicket impacto, UrgenciaTicket urgencia, EstadoTicket estadoTicket, LocalDateTime fechaCreacion, String descripcion, String asunto) {
+    public TicketDTO(int id, String asunto, String descripcion, LocalDateTime fechaCreacion, EstadoTicket estadoTicket, UrgenciaTicket urgencia, ImpactoTicket impacto, PrioridadTicket prioridad, String grupo, String tecnico, String solicitante, List<Historial> historiales, List<Anotacion> anotaciones, int id_grupo, int id_tecnico) {
         this.id = id;
-        this.anotaciones = anotaciones;
-        this.historiales = historiales;
+        this.asunto = asunto;
+        this.descripcion = descripcion;
+        this.fechaCreacion = fechaCreacion;
+        this.estadoTicket = estadoTicket;
+        this.urgencia = urgencia;
+        this.impacto = impacto;
+        this.prioridad = prioridad;
+        this.grupo = grupo;
         this.tecnico = tecnico;
         this.solicitante = solicitante;
-        this.grupo = grupo;
-        this.prioridad = prioridad;
-        this.impacto = impacto;
-        this.urgencia = urgencia;
-        this.estadoTicket = estadoTicket;
-        this.fechaCreacion = fechaCreacion;
-        this.descripcion = descripcion;
-        this.asunto = asunto;
+        this.historiales = historiales;
+        this.anotaciones = anotaciones;
+        this.id_grupo = id_grupo;
+        this.id_tecnico = id_tecnico;
     }
 
     public int getId() {
         return id;
+    }
+
+    public int getId_grupo() {
+        return id_grupo;
+    }
+
+    public void setId_grupo(int id_grupo) {
+        this.id_grupo = id_grupo;
+    }
+
+    public int getId_tecnico() {
+        return id_tecnico;
+    }
+
+    public void setId_tecnico(int id_tecnico) {
+        this.id_tecnico = id_tecnico;
     }
 
     public void setId(int id) {
@@ -170,6 +190,8 @@ public class TicketDTO {
                 ", solicitante='" + solicitante + '\'' +
                 ", historiales=" + historiales +
                 ", anotaciones=" + anotaciones +
+                ", id_grupo=" + id_grupo +
+                ", id_tecnico=" + id_tecnico +
                 '}';
     }
 }

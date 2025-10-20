@@ -63,22 +63,22 @@ public class TicketService implements ITicketService {
             Grupo grupo = grupoRepository.findById(ticket.getGrupo().getId()).orElse(null);
             if(grupo != null){
                 ticketDTO.setGrupo(grupo.getNombre());
+                ticketDTO.setId_grupo(grupo.getId());
             }else {
                 ticketDTO.setGrupo(null);
             }
         }
-
         if(ticket.getAgente() != null){
             Agente agente = agenteRepository.findById(ticket.getAgente().getId()).orElse(null);
 
             if(agente != null){
+                ticketDTO.setId_tecnico((int) agente.getUsuario().getId());
                 ticketDTO.setTecnico(agente.getUsuario().getNombre());
             }else {
                 ticketDTO.setTecnico(null);
             }
 
         }
-
         if(ticket.getSolicitante() != null){
             Solicitante solicitante = solicitanteRepository.findById(ticket.getSolicitante().getId()).orElse(null);
             if(solicitante != null){
@@ -91,10 +91,6 @@ public class TicketService implements ITicketService {
         ticketDTO.setAnotaciones(ticket.getAnotaciones());
 
         return ticketDTO;
-
-
-
-
 
     }
 
@@ -133,6 +129,14 @@ public class TicketService implements ITicketService {
             if (nuevoGrupo != null) {
                 ticket1.setGrupo(nuevoGrupo);
             }
+        }
+        if(ticket.getAgente() != null && ticket.getAgente().getId() != 0){
+            Agente agente = agenteRepository.findByUsuario_Id(ticket.getAgente().getId());
+
+            if(agente != null){
+                ticket1.setAgente(agente);
+            }
+
         }
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con email: " + email));

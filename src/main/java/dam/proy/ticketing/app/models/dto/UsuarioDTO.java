@@ -18,6 +18,15 @@ public class UsuarioDTO {
         this.activo = activo;
     }
 
+    public UsuarioDTO(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public UsuarioDTO(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
     public int getId() {
         return id;
     }
