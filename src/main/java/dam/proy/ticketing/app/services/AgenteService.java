@@ -18,6 +18,11 @@ public class AgenteService implements IAgenteService {
     private AgenteRepository agenteRepository;
 
     @Override
+    public Agente nuevoAgente(Agente agente) {
+        return this.agenteRepository.save(agente);
+    }
+
+    @Override
     public List<UsuarioDTO> obtenerUsuariosPorGrupo(int id_grupo) {
         List<Agente> agentes = agenteRepository.buscarPorGrupo(id_grupo);
         List<UsuarioDTO> usuarios = new ArrayList<>();

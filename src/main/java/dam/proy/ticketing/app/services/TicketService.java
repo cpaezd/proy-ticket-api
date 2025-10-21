@@ -20,12 +20,16 @@ public class TicketService implements ITicketService {
 
     @Autowired
     private GrupoRepository grupoRepository;
+
     @Autowired
     private AgenteRepository agenteRepository;
+
     @Autowired
     private SolicitanteRepository solicitanteRepository;
+
     @Autowired
     private UsuarioRepository usuarioRepository;
+
     @Autowired
     private HistorialRepository historialRepository;
 

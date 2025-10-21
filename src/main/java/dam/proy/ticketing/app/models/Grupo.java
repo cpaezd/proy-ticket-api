@@ -44,7 +44,11 @@ public class Grupo {
         this.nombre = nombre;
     }
 
-    public int getId() {
+	public Grupo(int grupo) {
+        this.id = grupo;
+	}
+
+	public int getId() {
         return id;
     }
 

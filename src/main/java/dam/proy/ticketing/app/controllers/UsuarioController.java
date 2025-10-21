@@ -2,6 +2,8 @@ package dam.proy.ticketing.app.controllers;
 
 import dam.proy.ticketing.app.models.dto.LoginResponseDTO;
 import dam.proy.ticketing.app.models.Usuario;
+import dam.proy.ticketing.app.models.dto.NuevoUsuarioRequest;
+import dam.proy.ticketing.app.models.dto.UsuarioDTO;
 import dam.proy.ticketing.app.services.interfaces.IUsuarioService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +27,22 @@ class UsuarioController {
     }
 
     // -------- VER UN USUARIO POR ID ---------
-    @GetMapping("/usuarios/{id}")
-    public ResponseEntity<Usuario> getUsuario(@PathVariable String id)
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioDTO> getUsuario(@PathVariable int id)
     {
-        return null;
+        UsuarioDTO usuario = this.usuarioService.getUsuario(id);
+
+        return usuario != null
+            ? ResponseEntity.ok(usuario)
+            : ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/nuevo")
+    public ResponseEntity<?>  nuevoUsuario(@RequestBody NuevoUsuarioRequest nur)
+    {
+        return this.usuarioService.nuevoUsuario(nur)
+            ? ResponseEntity.ok().build()
+            : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     @PostMapping("/login")
