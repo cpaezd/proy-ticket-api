@@ -35,6 +35,21 @@ class TicketController {
         }
     }
 
+    //--------- VER TODOS LOS TICKETS CON EL ESTADO RESUELTO O CERRADO  -------
+    @GetMapping("/resueltos")
+    public ResponseEntity<?> verTicketsResueltos(){
+        try{
+            List<Ticket> tickets = ticketService.verResueltosCerrados();
+
+            if(tickets.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay tickets");
+            }
+            return ResponseEntity.ok(tickets);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al obtener los tickets resueltos: " + e.getMessage());
+        }
+    }
+
     // ---------- VER TICKET POR ID ----------
 
     @GetMapping("{id}")

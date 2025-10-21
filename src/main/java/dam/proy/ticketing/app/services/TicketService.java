@@ -45,6 +45,19 @@ public class TicketService implements ITicketService {
     }
 
     @Override
+    public List<Ticket> verResueltosCerrados() {
+        List<Ticket> todos = ticketRepository.findAll();
+        List<Ticket> resueltos = new ArrayList<>();
+
+        for(Ticket item : todos){
+            if(item.getEstadoTicket() == EstadoTicket.RESUELTO || item.getEstadoTicket() == EstadoTicket.CERRADO){
+                resueltos.add(item);
+            }
+        }
+        return resueltos;
+    }
+
+    @Override
     public TicketDTO buscarPorId(int id) {
         Ticket ticket = ticketRepository.findById(id).orElse(null);
 
@@ -112,7 +125,14 @@ public class TicketService implements ITicketService {
 
         if(ticket.getEstadoTicket() != null){
             ticket1.setEstadoTicket(ticket.getEstadoTicket());
+
+            if(ticket.getEstadoTicket() == EstadoTicket.RESUELTO){
+                ticket1.setFecha_resolucion(LocalDateTime.now());
+            }
         }
+
+
+
         if(ticket.getUrgencia() != null){
             ticket1.setUrgencia(ticket.getUrgencia());
         }

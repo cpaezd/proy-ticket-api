@@ -45,6 +45,12 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private PrioridadTicket prioridad;
 
+    @Column
+    private LocalDateTime fecha_resolucion;
+
+    @Column
+    private LocalDateTime fecha_cierre;
+
     @ManyToOne
     @JoinColumn(name = "grupo")
     @JsonBackReference("ticket-grupo")
@@ -100,6 +106,53 @@ public class Ticket {
         this.fechaCreacion = fechaCreacion;
         this.descripcion = descripcion;
         this.asunto = asunto;
+    }
+
+    public Ticket(int id, LocalDateTime fecha_cierre, LocalDateTime fecha_resolucion, ImpactoTicket impacto, PrioridadTicket prioridad, UrgenciaTicket urgencia, EstadoTicket estadoTicket, LocalDateTime fechaCreacion, String descripcion, String asunto) {
+        this.id = id;
+        this.fecha_cierre = fecha_cierre;
+        this.fecha_resolucion = fecha_resolucion;
+        this.impacto = impacto;
+        this.prioridad = prioridad;
+        this.urgencia = urgencia;
+        this.estadoTicket = estadoTicket;
+        this.fechaCreacion = fechaCreacion;
+        this.descripcion = descripcion;
+        this.asunto = asunto;
+    }
+
+    public Ticket(int id, List<Anotacion> anotaciones, List<Historial> historiales, Solicitante solicitante, Agente agente, Grupo grupo, LocalDateTime fecha_cierre, LocalDateTime fecha_resolucion, PrioridadTicket prioridad, UrgenciaTicket urgencia, ImpactoTicket impacto, EstadoTicket estadoTicket, LocalDateTime fechaCreacion, String descripcion, String asunto) {
+        this.id = id;
+        this.anotaciones = anotaciones;
+        this.historiales = historiales;
+        this.solicitante = solicitante;
+        this.agente = agente;
+        this.grupo = grupo;
+        this.fecha_cierre = fecha_cierre;
+        this.fecha_resolucion = fecha_resolucion;
+        this.prioridad = prioridad;
+        this.urgencia = urgencia;
+        this.impacto = impacto;
+        this.estadoTicket = estadoTicket;
+        this.fechaCreacion = fechaCreacion;
+        this.descripcion = descripcion;
+        this.asunto = asunto;
+    }
+
+    public LocalDateTime getFecha_resolucion() {
+        return fecha_resolucion;
+    }
+
+    public void setFecha_resolucion(LocalDateTime fecha_resolucion) {
+        this.fecha_resolucion = fecha_resolucion;
+    }
+
+    public LocalDateTime getFecha_cierre() {
+        return fecha_cierre;
+    }
+
+    public void setFecha_cierre(LocalDateTime fecha_cierre) {
+        this.fecha_cierre = fecha_cierre;
     }
 
     public int getId() {
@@ -214,9 +267,11 @@ public class Ticket {
                 ", descripcion='" + descripcion + '\'' +
                 ", fechaCreacion=" + fechaCreacion +
                 ", estadoTicket=" + estadoTicket +
-                ", urgencia='" + urgencia + '\'' +
-                ", impacto='" + impacto + '\'' +
-                ", prioridad='" + prioridad + '\'' +
+                ", urgencia=" + urgencia +
+                ", impacto=" + impacto +
+                ", prioridad=" + prioridad +
+                ", fecha_resolucion=" + fecha_resolucion +
+                ", fecha_cierre=" + fecha_cierre +
                 ", grupo=" + grupo +
                 ", solicitante=" + solicitante +
                 ", agente=" + agente +

@@ -9,6 +9,7 @@ import java.util.List;
 public interface ITicketService {
 
     public List<Ticket> verActivos();
+    public List<Ticket> verResueltosCerrados();
     public TicketDTO buscarPorId(int id);
     public Ticket editarTicket(int id, Ticket ticket, String email);
 
