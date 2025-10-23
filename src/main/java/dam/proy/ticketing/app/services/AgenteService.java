@@ -36,4 +36,9 @@ public class AgenteService implements IAgenteService {
         }
         return usuarios;
     }
+
+    @Override
+    public Agente getAgente(int id) {
+        return this.agenteRepository.findById(id).orElse(null);
+    }
 }

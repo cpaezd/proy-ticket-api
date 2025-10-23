@@ -8,33 +8,27 @@ public class UsuarioDTO {
     private String nombre;
     private String apellidos;
     private String email;
+    private String perfil;
     private boolean activo;
 
 
     public UsuarioDTO() {}
 
-    public UsuarioDTO(int id, String nombre, String apellidos, String email, boolean activo) {
+    public UsuarioDTO(int id, String nombre, String apellidos, String email, String perfil, boolean activo) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
+        this.perfil = perfil;
         this.activo = activo;
     }
 
-    public UsuarioDTO(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public UsuarioDTO(int id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-    }
-
     public UsuarioDTO(Usuario usuario) {
-        this.id = (int) usuario.getId();
+        this.id = usuario.getId();
         this.nombre = usuario.getNombre();
         this.apellidos = usuario.getApellidos();
         this.email = usuario.getEmail();
+        this.perfil = usuario.getPerfil().getNombre();
         this.activo = usuario.isActivo();
     }
 
@@ -68,6 +62,14 @@ public class UsuarioDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
     }
 
     public boolean isActivo() {

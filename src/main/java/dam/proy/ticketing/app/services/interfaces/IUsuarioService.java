@@ -8,7 +8,7 @@ import dam.proy.ticketing.app.models.dto.UsuarioDTO;
 import java.util.List;
 
 public interface IUsuarioService {
-    List<Usuario> getUsuarios();
+    List<UsuarioDTO> getUsuarios();
     UsuarioDTO getUsuario(int id);
     boolean nuevoUsuario(NuevoUsuarioRequest nur);
     boolean editarUsuario(int id, Usuario usuario);

@@ -3,12 +3,8 @@ package dam.proy.ticketing.app.services;
 import dam.proy.ticketing.app.models.Agente;
 import dam.proy.ticketing.app.models.Grupo;
 import dam.proy.ticketing.app.models.Solicitante;
-import dam.proy.ticketing.app.models.dto.LoginResponseDTO;
+import dam.proy.ticketing.app.models.dto.*;
 import dam.proy.ticketing.app.models.Usuario;
-import dam.proy.ticketing.app.models.dto.NuevoUsuarioRequest;
-import dam.proy.ticketing.app.models.dto.UsuarioDTO;
-import dam.proy.ticketing.app.repositories.AgenteRepository;
-import dam.proy.ticketing.app.repositories.SolicitanteRepository;
 import dam.proy.ticketing.app.repositories.UsuarioRepository;
 import dam.proy.ticketing.app.security.JwtUtil;
 import dam.proy.ticketing.app.services.interfaces.IUsuarioService;
@@ -29,8 +25,6 @@ public class UsuarioService implements IUsuarioService {
 
 	@Autowired
 	private SolicitanteService solicitanteService;
-	@Autowired
-	private AgenteRepository agenteRepository;
 
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -47,7 +41,6 @@ public class UsuarioService implements IUsuarioService {
 
 
 			Usuario usuario1 = usuarioOptional.get();
-			Agente agente = agenteRepository.findById((int)usuario1.getId()).orElse(null);
 
 
 			if (passwordEncoder.matches(usuario.getPassword(), usuario1.getPassword())) {
@@ -60,9 +53,6 @@ public class UsuarioService implements IUsuarioService {
 				usuario2.setNombre(usuario1.getNombre());
 				usuario2.setApellidos(usuario1.getApellidos());
 				usuario2.setEmail(usuario1.getEmail());
-				if(agente != null && agente.getGrupo() != null){
-					usuario2.setId_grupo(agente.getGrupo().getId());
-				}
 
 				return usuario2;
 			}
@@ -71,6 +61,8 @@ public class UsuarioService implements IUsuarioService {
 
 		return null;
 	}
+
+	@Override
 	public Usuario buscarPorEmail(String email) {
 		Usuario usuario = usuarioRepository.findByEmail(email)
 				.orElseThrow(() -> new RuntimeException("Usuario no encontrado con email: " + email));;
@@ -78,21 +70,33 @@ public class UsuarioService implements IUsuarioService {
 	}
 
 	@Override
-	public List<Usuario> getUsuarios() {
-		return this.usuarioRepository.findAll();
+	public List<UsuarioDTO> getUsuarios()
+	{
+		List<Usuario> usuarios = usuarioRepository.findAll();
+
+		return usuarios
+			.stream()
+			.map(u -> new UsuarioDTO(u))
+			.toList();
 	}
 
 	@Override
 	public UsuarioDTO getUsuario(int id) {
-		Usuario user;
-		UsuarioDTO userDTO;
+		Usuario user = this.usuarioRepository.findById(id).orElse(null);
+		UsuarioDTO userDTO = null;
 
-		try {
-			user = this.usuarioRepository.findById(id).orElseThrow();
-
-			userDTO = new UsuarioDTO(user);
-		} catch (Exception e) {
+		if (user == null) {
 			return null;
+		}
+
+		if(user.getPerfil().getId() == 4) {
+			Solicitante s = this.solicitanteService.getSolicitante(user.getId());
+
+			userDTO = new SolicitanteDTO(user, s);
+		} else {
+			Agente a = this.agenteService.getAgente(user.getId());
+
+			userDTO = new AgenteDTO(user, a);
 		}
 
 		return userDTO;

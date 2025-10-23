@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface ISolicitanteService {
     Solicitante nuevoSolicitante(Solicitante solicitante);
+    Solicitante getSolicitante(int id);
 
     /**
      * Define el método para obtener tickets.

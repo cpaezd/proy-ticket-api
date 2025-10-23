@@ -75,4 +75,9 @@ public class SolicitanteService implements ISolicitanteService {
         return this.solicitanteRepository.save(solicitante);
     }
 
+    @Override
+    public Solicitante getSolicitante(int id) {
+        return this.solicitanteRepository.findById(id).orElse(null);
+    }
+
 }
