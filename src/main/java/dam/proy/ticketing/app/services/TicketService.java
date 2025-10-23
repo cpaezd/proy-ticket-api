@@ -173,7 +173,78 @@ public class TicketService implements ITicketService {
         return ticketRepository.save(ticket1);
     }
 
+    @Override
+    public List<TicketDTO> buscarPorGrupo(int id_grupo) {
 
+        List<Ticket> todos = ticketRepository.findAll();
+        List<TicketDTO> todosgrupo = new ArrayList<>();
+
+        for(Ticket item : todos){
+
+            if(item.getEstadoTicket() != EstadoTicket.RESUELTO && item.getEstadoTicket() != EstadoTicket.CERRADO) {
+
+                if (item.getGrupo().getId() == id_grupo) {
+
+                    TicketDTO ticketDTO = new TicketDTO();
+
+                    ticketDTO.setId(item.getId());
+                    ticketDTO.setAsunto(item.getAsunto());
+                    ticketDTO.setDescripcion(item.getDescripcion());
+                    ticketDTO.setFechaCreacion(item.getFechaCreacion());
+                    ticketDTO.setEstadoTicket(item.getEstadoTicket());
+                    ticketDTO.setUrgencia(item.getUrgencia());
+                    ticketDTO.setImpacto(item.getImpacto());
+                    ticketDTO.setPrioridad(item.getPrioridad());
+                    ticketDTO.setGrupo(item.getGrupo().getNombre());
+                    ticketDTO.setId_grupo(item.getGrupo().getId());
+                    ticketDTO.setTecnico(item.getAgente().getUsuario().getNombre());
+                    ticketDTO.setId_tecnico(item.getAgente().getId());
+
+                    todosgrupo.add(ticketDTO);
+                }
+            }
+        }
+
+        return todosgrupo;
+
+    }
+
+    @Override
+    public List<TicketDTO> buscarPorGrupoResueltos(int id_grupo) {
+
+        List<Ticket> todos = ticketRepository.findAll();
+        List<TicketDTO> todosgrupo = new ArrayList<>();
+
+        for(Ticket item : todos){
+
+            if(item.getEstadoTicket() == EstadoTicket.RESUELTO || item.getEstadoTicket() == EstadoTicket.CERRADO) {
+
+                if (item.getGrupo().getId() == id_grupo) {
+
+                    TicketDTO ticketDTO = new TicketDTO();
+
+                    ticketDTO.setId(item.getId());
+                    ticketDTO.setAsunto(item.getAsunto());
+                    ticketDTO.setDescripcion(item.getDescripcion());
+                    ticketDTO.setFechaCreacion(item.getFechaCreacion());
+                    ticketDTO.setEstadoTicket(item.getEstadoTicket());
+                    ticketDTO.setUrgencia(item.getUrgencia());
+                    ticketDTO.setImpacto(item.getImpacto());
+                    ticketDTO.setPrioridad(item.getPrioridad());
+                    ticketDTO.setGrupo(item.getGrupo().getNombre());
+                    ticketDTO.setId_grupo(item.getGrupo().getId());
+                    ticketDTO.setTecnico(item.getAgente().getUsuario().getNombre());
+                    ticketDTO.setId_tecnico(item.getAgente().getId());
+                    ticketDTO.setFecha_resolucion(item.getFecha_resolucion());
+
+                    todosgrupo.add(ticketDTO);
+                }
+            }
+        }
+
+        return todosgrupo;
+
+    }
 
 
 }

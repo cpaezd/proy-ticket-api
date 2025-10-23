@@ -10,6 +10,7 @@ public class LoginResponseDTO {
 	private String nombre;
 	private String apellidos;
 	private String email;
+	private int id_grupo;
 
 	public LoginResponseDTO() {
 	}
@@ -30,6 +31,24 @@ public class LoginResponseDTO {
 		this.nombre = usuario.getNombre();
 		this.nombre_perfil = usuario.getPerfil().getNombre();
 		this.id_perfil = usuario.getPerfil().getId();
+	}
+
+	public LoginResponseDTO(String token, int id_grupo, String email, String nombre, String apellidos, String nombre_perfil, int id_perfil) {
+		this.token = token;
+		this.id_grupo = id_grupo;
+		this.email = email;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.nombre_perfil = nombre_perfil;
+		this.id_perfil = id_perfil;
+	}
+
+	public int getId_grupo() {
+		return id_grupo;
+	}
+
+	public void setId_grupo(int id_grupo) {
+		this.id_grupo = id_grupo;
 	}
 
 	public String getToken() {

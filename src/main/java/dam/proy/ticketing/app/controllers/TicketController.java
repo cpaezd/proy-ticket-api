@@ -68,4 +68,17 @@ class TicketController {
         Ticket actualizado = ticketService.editarTicket(id, ticket, emailUsuario);
         return new ResponseEntity<>(actualizado, HttpStatus.OK);
     }
+
+    // --------- VER TODOS LOS TICKETS DE UN GRUPO QUE ESTAN ACTIVOS(SIN RESOLVER) -------
+
+    @GetMapping("grupo/{id_grupo}")
+    public  ResponseEntity<List<TicketDTO>> verPorGrupo(@PathVariable int id_grupo){
+        return new ResponseEntity<>(ticketService.buscarPorGrupo(id_grupo),HttpStatus.OK);
+    }
+
+    // --------- VER TODOS LOS TICKETS DE UN GRUPO QUE ESTAN RESUELTOS O CERRADOS -------
+    @GetMapping("grupo/resuelto/{id_grupo}")
+    public ResponseEntity<List<TicketDTO>> verPorGrupoResueltos(@PathVariable int id_grupo){
+        return new ResponseEntity<>(ticketService.buscarPorGrupoResueltos(id_grupo),HttpStatus.OK);
+    }
 }

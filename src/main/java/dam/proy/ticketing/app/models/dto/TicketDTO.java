@@ -26,6 +26,7 @@ public class TicketDTO {
     private List<Anotacion> anotaciones;
     private int id_grupo;
     private int id_tecnico;
+    private LocalDateTime fecha_resolucion;
 
     public TicketDTO() {
     }
@@ -36,7 +37,7 @@ public class TicketDTO {
         this.solicitante = solicitante;
     }
 
-    public TicketDTO(int id, String asunto, String descripcion, LocalDateTime fechaCreacion, EstadoTicket estadoTicket, UrgenciaTicket urgencia, ImpactoTicket impacto, PrioridadTicket prioridad, String grupo, String tecnico, String solicitante, List<Historial> historiales, List<Anotacion> anotaciones, int id_grupo, int id_tecnico) {
+    public TicketDTO(int id, String asunto, String descripcion, LocalDateTime fechaCreacion, EstadoTicket estadoTicket, UrgenciaTicket urgencia, ImpactoTicket impacto, PrioridadTicket prioridad, String grupo, String tecnico, String solicitante, List<Historial> historiales, List<Anotacion> anotaciones, int id_grupo, int id_tecnico, LocalDateTime fecha_resolucion) {
         this.id = id;
         this.asunto = asunto;
         this.descripcion = descripcion;
@@ -52,6 +53,32 @@ public class TicketDTO {
         this.anotaciones = anotaciones;
         this.id_grupo = id_grupo;
         this.id_tecnico = id_tecnico;
+        this.fecha_resolucion = fecha_resolucion;
+    }
+
+    public TicketDTO(LocalDateTime fecha_resolucion, int id_tecnico, int id_grupo, String solicitante, String tecnico, String grupo, PrioridadTicket prioridad, ImpactoTicket impacto, UrgenciaTicket urgencia, EstadoTicket estadoTicket, LocalDateTime fechaCreacion, String descripcion, String asunto, int id) {
+        this.fecha_resolucion = fecha_resolucion;
+        this.id_tecnico = id_tecnico;
+        this.id_grupo = id_grupo;
+        this.solicitante = solicitante;
+        this.tecnico = tecnico;
+        this.grupo = grupo;
+        this.prioridad = prioridad;
+        this.impacto = impacto;
+        this.urgencia = urgencia;
+        this.estadoTicket = estadoTicket;
+        this.fechaCreacion = fechaCreacion;
+        this.descripcion = descripcion;
+        this.asunto = asunto;
+        this.id = id;
+    }
+
+    public LocalDateTime getFecha_resolucion() {
+        return fecha_resolucion;
+    }
+
+    public void setFecha_resolucion(LocalDateTime fecha_resolucion) {
+        this.fecha_resolucion = fecha_resolucion;
     }
 
     public int getId() {
@@ -192,6 +219,7 @@ public class TicketDTO {
                 ", anotaciones=" + anotaciones +
                 ", id_grupo=" + id_grupo +
                 ", id_tecnico=" + id_tecnico +
+                ", fecha_resolucion=" + fecha_resolucion +
                 '}';
     }
 }

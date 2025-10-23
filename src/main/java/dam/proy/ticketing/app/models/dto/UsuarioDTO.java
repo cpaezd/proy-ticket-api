@@ -10,6 +10,7 @@ public class UsuarioDTO {
     private String email;
     private boolean activo;
 
+
     public UsuarioDTO() {}
 
     public UsuarioDTO(int id, String nombre, String apellidos, String email, boolean activo) {
