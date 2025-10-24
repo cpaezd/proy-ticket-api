@@ -5,6 +5,7 @@ import dam.proy.ticketing.app.models.Grupo;
 import dam.proy.ticketing.app.models.Solicitante;
 import dam.proy.ticketing.app.models.dto.*;
 import dam.proy.ticketing.app.models.Usuario;
+import dam.proy.ticketing.app.repositories.AgenteRepository;
 import dam.proy.ticketing.app.repositories.UsuarioRepository;
 import dam.proy.ticketing.app.security.JwtUtil;
 import dam.proy.ticketing.app.services.interfaces.IUsuarioService;
@@ -25,6 +26,8 @@ public class UsuarioService implements IUsuarioService {
 
 	@Autowired
 	private SolicitanteService solicitanteService;
+	@Autowired
+	private AgenteRepository agenteRepository;
 
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -41,6 +44,7 @@ public class UsuarioService implements IUsuarioService {
 
 
 			Usuario usuario1 = usuarioOptional.get();
+			Agente agente = agenteRepository.findById((int)usuario1.getId()).orElse(null);
 
 
 			if (passwordEncoder.matches(usuario.getPassword(), usuario1.getPassword())) {
@@ -53,6 +57,10 @@ public class UsuarioService implements IUsuarioService {
 				usuario2.setNombre(usuario1.getNombre());
 				usuario2.setApellidos(usuario1.getApellidos());
 				usuario2.setEmail(usuario1.getEmail());
+				if(agente != null && agente.getGrupo() != null){
+					usuario2.setId_grupo(agente.getGrupo().getId());
+				}
+
 
 				return usuario2;
 			}
