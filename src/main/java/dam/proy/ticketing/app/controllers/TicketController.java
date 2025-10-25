@@ -22,9 +22,9 @@ class TicketController {
 
     // --------- VER TODOS LOS TICKETS QUE NO TIENEN EL ESTADO RESUELTO O CERRADO  -------
     @GetMapping()
-    public ResponseEntity<?> verTodosLosTicketActivos (){
+    public ResponseEntity<?> verTodosLosTicketActivos (@RequestParam int id_usuario){
         try{
-            List<Ticket> tickets = ticketService.verActivos();
+            List<Ticket> tickets = ticketService.verActivosParaAgente(id_usuario);
 
             if(tickets.isEmpty()){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay tickets");
@@ -81,4 +81,67 @@ class TicketController {
     public ResponseEntity<List<TicketDTO>> verPorGrupoResueltos(@PathVariable int id_grupo){
         return new ResponseEntity<>(ticketService.buscarPorGrupoResueltos(id_grupo),HttpStatus.OK);
     }
+
+    // -------------------------------------   WORKSPACE DE AGENTE    -------------------------------------------------
+
+    // --------- ASIGNAR UN TICKET A UN AGENTE PARA QUE SOLO LO PUEDA VISUALIZAR EN SU WORKSPACE -------
+    @PutMapping("asignar/{id_ticket}")
+    public ResponseEntity<?> asignarTicket(@PathVariable int id_ticket,@RequestParam int id_usuario){
+        try{
+            Ticket ticket = ticketService.asignarResponsable(id_ticket,id_usuario);
+            return ResponseEntity.ok(ticket);
+
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al asignar ticket: " + e.getMessage());
+        }
+    }
+    // --------- DESASIGNAR TICKET PARA QUE VUELVA A QUEDAR LIBRE A LA VISTA DE TODOS LOS AGENTES Y SE PUEDA SOLVENTAR -------
+
+    @PutMapping("desasignar/{id_ticket}")
+    public ResponseEntity<?> desasignarTicket(@PathVariable int id_ticket){
+        try{
+            Ticket ticket= ticketService.designarResponsable(id_ticket);
+            return ResponseEntity.ok(ticket);
+
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al desasignar ticket: " + e.getMessage());
+        }
+    }
+
+    // --------- VER TICKETS ASIGNADOS A UN AGENTE EN SU WORKSPACE -------
+
+    @GetMapping("/workspace")
+    public ResponseEntity<?> verTicketsAsignados(@RequestParam int id_usuario){
+        try{
+            List<Ticket> tickets = ticketService.verTicketAsignadosAgente(id_usuario);
+            return ResponseEntity.ok(tickets);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al obtener los tickets asignados: " + e.getMessage());
+        }
+    }
+
+    // --------- LIBERAR TICKETS ASIGNADOS -------
+
+    @PutMapping("/liberar")
+    public ResponseEntity<?> liberarTickets(@RequestParam int id_usuario){
+        try{
+            ticketService.liberarTickets(id_usuario);
+            return ResponseEntity.ok("Tickets liberados correctamente");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al liberar tickets: " + e.getMessage());
+        }
+    }
+
+    // --------- DROPEAR TICKET QUITARLE LA ASIGNACION POR ID_TICKET -------
+    @PutMapping("/dropear")
+    public ResponseEntity<String> dropearTicket(@RequestParam int id_ticket){
+        boolean resultado = ticketService.dropearTicket(id_ticket);
+
+        if(resultado){
+            return ResponseEntity.ok("Ticket dropeado correctamente");
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ticket no encontrado");
+        }
+    }
+
 }

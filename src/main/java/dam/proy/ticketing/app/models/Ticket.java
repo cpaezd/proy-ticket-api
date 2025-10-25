@@ -50,6 +50,8 @@ public class Ticket {
 
     @Column
     private LocalDateTime fecha_cierre;
+    @Column
+    private Integer responsable;
 
     @ManyToOne
     @JoinColumn(name = "grupo")
@@ -137,6 +139,33 @@ public class Ticket {
         this.fechaCreacion = fechaCreacion;
         this.descripcion = descripcion;
         this.asunto = asunto;
+    }
+
+    public Ticket(int id, List<Anotacion> anotaciones, List<Historial> historiales, Agente agente, Solicitante solicitante, Grupo grupo, int responsable, LocalDateTime fecha_cierre, LocalDateTime fecha_resolucion, ImpactoTicket impacto, PrioridadTicket prioridad, UrgenciaTicket urgencia, EstadoTicket estadoTicket, LocalDateTime fechaCreacion, String descripcion, String asunto) {
+        this.id = id;
+        this.anotaciones = anotaciones;
+        this.historiales = historiales;
+        this.agente = agente;
+        this.solicitante = solicitante;
+        this.grupo = grupo;
+        this.responsable = responsable;
+        this.fecha_cierre = fecha_cierre;
+        this.fecha_resolucion = fecha_resolucion;
+        this.impacto = impacto;
+        this.prioridad = prioridad;
+        this.urgencia = urgencia;
+        this.estadoTicket = estadoTicket;
+        this.fechaCreacion = fechaCreacion;
+        this.descripcion = descripcion;
+        this.asunto = asunto;
+    }
+
+    public Integer getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(Integer responsable) {
+        this.responsable = responsable;
     }
 
     public LocalDateTime getFecha_resolucion() {
@@ -272,6 +301,7 @@ public class Ticket {
                 ", prioridad=" + prioridad +
                 ", fecha_resolucion=" + fecha_resolucion +
                 ", fecha_cierre=" + fecha_cierre +
+                ", responsable=" + responsable +
                 ", grupo=" + grupo +
                 ", solicitante=" + solicitante +
                 ", agente=" + agente +

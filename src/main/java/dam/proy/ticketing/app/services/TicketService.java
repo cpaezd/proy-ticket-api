@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TicketService implements ITicketService {
@@ -34,9 +35,9 @@ public class TicketService implements ITicketService {
     private HistorialRepository historialRepository;
 
     @Override
-    public List<Ticket> verActivos() {
+    public List<Ticket> verActivosParaAgente(int id_usuario) {
 
-        List<Ticket> todos = ticketRepository.findAll();
+        List<Ticket> todos = ticketRepository.verActivosParaAgente(id_usuario);
         List<Ticket> activos = new ArrayList<>();
 
         for(Ticket item : todos){
@@ -243,6 +244,52 @@ public class TicketService implements ITicketService {
         }
 
         return todosgrupo;
+
+    }
+
+    @Override
+    public Ticket asignarResponsable(int id_ticket, int id_usuario) {
+        Ticket ticket = ticketRepository.findById(id_ticket).orElse(null);
+
+        ticket.setResponsable(id_usuario);
+        return ticketRepository.save(ticket);
+    }
+
+    @Override
+    public Ticket designarResponsable(int id_ticket) {
+        Ticket ticket = ticketRepository.findById(id_ticket).orElse(null);
+        ticket.setResponsable(null);
+        return ticketRepository.save(ticket);
+    }
+
+    @Override
+    public List<Ticket> verTicketAsignadosAgente(int id_usuario) {
+        return ticketRepository.verTicketsAsignados(id_usuario);
+    }
+
+    @Override
+    public void liberarTickets(int id_usuario) {
+        List<Ticket> tickets = ticketRepository.verTicketsAsignados(id_usuario);
+
+        for(Ticket item: tickets){
+
+            item.setResponsable(null);
+            ticketRepository.save(item);
+
+        }
+    }
+
+    @Override
+    public boolean dropearTicket(int id_ticket) {
+        Ticket ticket = ticketRepository.findById(id_ticket).orElse(null);
+
+        if(ticket == null){
+            return false;
+        }
+        ticket.setResponsable(null);
+        ticketRepository.save(ticket);
+
+        return true;
 
     }
 

@@ -57,6 +57,7 @@ public class UsuarioService implements IUsuarioService {
 				usuario2.setNombre(usuario1.getNombre());
 				usuario2.setApellidos(usuario1.getApellidos());
 				usuario2.setEmail(usuario1.getEmail());
+				usuario2.setId_usuario(usuario1.getId());
 				if(agente != null && agente.getGrupo() != null){
 					usuario2.setId_grupo(agente.getGrupo().getId());
 				}

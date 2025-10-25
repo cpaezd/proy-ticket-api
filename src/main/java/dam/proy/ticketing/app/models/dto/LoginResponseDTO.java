@@ -11,6 +11,7 @@ public class LoginResponseDTO {
 	private String apellidos;
 	private String email;
 	private int id_grupo;
+	private int id_usuario;
 
 	public LoginResponseDTO() {
 	}
@@ -33,14 +34,23 @@ public class LoginResponseDTO {
 		this.id_perfil = usuario.getPerfil().getId();
 	}
 
-	public LoginResponseDTO(String token, int id_grupo, String email, String nombre, String apellidos, String nombre_perfil, int id_perfil) {
+	public LoginResponseDTO(String token, int id_usuario, int id_grupo, String email, String apellidos, String nombre, String nombre_perfil, int id_perfil) {
 		this.token = token;
+		this.id_usuario = id_usuario;
 		this.id_grupo = id_grupo;
 		this.email = email;
-		this.nombre = nombre;
 		this.apellidos = apellidos;
+		this.nombre = nombre;
 		this.nombre_perfil = nombre_perfil;
 		this.id_perfil = id_perfil;
+	}
+
+	public int getId_usuario() {
+		return id_usuario;
+	}
+
+	public void setId_usuario(int id_usuario) {
+		this.id_usuario = id_usuario;
 	}
 
 	public int getId_grupo() {
@@ -101,13 +111,15 @@ public class LoginResponseDTO {
 
 	@Override
 	public String toString() {
-		return "LoginRespuestaDTO{" +
+		return "LoginResponseDTO{" +
 				"token='" + token + '\'' +
 				", id_perfil=" + id_perfil +
 				", nombre_perfil='" + nombre_perfil + '\'' +
 				", nombre='" + nombre + '\'' +
 				", apellidos='" + apellidos + '\'' +
 				", email='" + email + '\'' +
+				", id_grupo=" + id_grupo +
+				", id_usuario=" + id_usuario +
 				'}';
 	}
 }
