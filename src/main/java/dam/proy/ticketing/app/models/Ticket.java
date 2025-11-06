@@ -52,6 +52,8 @@ public class Ticket {
     private LocalDateTime fecha_cierre;
     @Column
     private Integer responsable;
+    @Column
+    private Integer responsable_tecnico;
 
     @ManyToOne
     @JoinColumn(name = "grupo")
@@ -141,23 +143,32 @@ public class Ticket {
         this.asunto = asunto;
     }
 
-    public Ticket(int id, List<Anotacion> anotaciones, List<Historial> historiales, Agente agente, Solicitante solicitante, Grupo grupo, int responsable, LocalDateTime fecha_cierre, LocalDateTime fecha_resolucion, ImpactoTicket impacto, PrioridadTicket prioridad, UrgenciaTicket urgencia, EstadoTicket estadoTicket, LocalDateTime fechaCreacion, String descripcion, String asunto) {
+    public Ticket(int id, String asunto, String descripcion, LocalDateTime fechaCreacion, EstadoTicket estadoTicket, UrgenciaTicket urgencia, ImpactoTicket impacto, PrioridadTicket prioridad, LocalDateTime fecha_cierre, LocalDateTime fecha_resolucion, Integer responsable, Integer responsable_tecnico, Grupo grupo, Solicitante solicitante, Agente agente, List<Historial> historiales, List<Anotacion> anotaciones) {
         this.id = id;
-        this.anotaciones = anotaciones;
-        this.historiales = historiales;
-        this.agente = agente;
-        this.solicitante = solicitante;
-        this.grupo = grupo;
-        this.responsable = responsable;
-        this.fecha_cierre = fecha_cierre;
-        this.fecha_resolucion = fecha_resolucion;
+        this.asunto = asunto;
+        this.descripcion = descripcion;
+        this.fechaCreacion = fechaCreacion;
+        this.estadoTicket = estadoTicket;
+        this.urgencia = urgencia;
         this.impacto = impacto;
         this.prioridad = prioridad;
-        this.urgencia = urgencia;
-        this.estadoTicket = estadoTicket;
-        this.fechaCreacion = fechaCreacion;
-        this.descripcion = descripcion;
-        this.asunto = asunto;
+        this.fecha_cierre = fecha_cierre;
+        this.fecha_resolucion = fecha_resolucion;
+        this.responsable = responsable;
+        this.responsable_tecnico = responsable_tecnico;
+        this.grupo = grupo;
+        this.solicitante = solicitante;
+        this.agente = agente;
+        this.historiales = historiales;
+        this.anotaciones = anotaciones;
+    }
+
+    public Integer getResponsable_tecnico() {
+        return responsable_tecnico;
+    }
+
+    public void setResponsable_tecnico(Integer responsable_tecnico) {
+        this.responsable_tecnico = responsable_tecnico;
     }
 
     public Integer getResponsable() {
@@ -302,6 +313,7 @@ public class Ticket {
                 ", fecha_resolucion=" + fecha_resolucion +
                 ", fecha_cierre=" + fecha_cierre +
                 ", responsable=" + responsable +
+                ", responsable_tecnico=" + responsable_tecnico +
                 ", grupo=" + grupo +
                 ", solicitante=" + solicitante +
                 ", agente=" + agente +

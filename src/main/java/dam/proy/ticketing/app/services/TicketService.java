@@ -175,7 +175,7 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public List<TicketDTO> buscarPorGrupo(int id_grupo) {
+    public List<TicketDTO> buscarPorGrupo(int id_grupo,int id_usuario) {
 
         List<Ticket> todos = ticketRepository.findAll();
         List<TicketDTO> todosgrupo = new ArrayList<>();
@@ -185,23 +185,29 @@ public class TicketService implements ITicketService {
             if(item.getEstadoTicket() != EstadoTicket.RESUELTO && item.getEstadoTicket() != EstadoTicket.CERRADO) {
 
                 if (item.getGrupo().getId() == id_grupo) {
+                    if (item.getResponsable_tecnico() == null || item.getResponsable_tecnico() == id_usuario) {
 
-                    TicketDTO ticketDTO = new TicketDTO();
+                        TicketDTO ticketDTO = new TicketDTO();
 
-                    ticketDTO.setId(item.getId());
-                    ticketDTO.setAsunto(item.getAsunto());
-                    ticketDTO.setDescripcion(item.getDescripcion());
-                    ticketDTO.setFechaCreacion(item.getFechaCreacion());
-                    ticketDTO.setEstadoTicket(item.getEstadoTicket());
-                    ticketDTO.setUrgencia(item.getUrgencia());
-                    ticketDTO.setImpacto(item.getImpacto());
-                    ticketDTO.setPrioridad(item.getPrioridad());
-                    ticketDTO.setGrupo(item.getGrupo().getNombre());
-                    ticketDTO.setId_grupo(item.getGrupo().getId());
-                    ticketDTO.setTecnico(item.getAgente().getUsuario().getNombre());
-                    ticketDTO.setId_tecnico(item.getAgente().getId());
+                        ticketDTO.setId(item.getId());
+                        ticketDTO.setAsunto(item.getAsunto());
+                        ticketDTO.setDescripcion(item.getDescripcion());
+                        ticketDTO.setFechaCreacion(item.getFechaCreacion());
+                        ticketDTO.setEstadoTicket(item.getEstadoTicket());
+                        ticketDTO.setUrgencia(item.getUrgencia());
+                        ticketDTO.setImpacto(item.getImpacto());
+                        ticketDTO.setPrioridad(item.getPrioridad());
+                        ticketDTO.setGrupo(item.getGrupo().getNombre());
+                        ticketDTO.setId_grupo(item.getGrupo().getId());
+                        ticketDTO.setTecnico(item.getAgente().getUsuario().getNombre());
+                        ticketDTO.setId_tecnico(item.getAgente().getId());
 
-                    todosgrupo.add(ticketDTO);
+                        if (item.getResponsable_tecnico() != null) {
+                            ticketDTO.setResponsable_tecnico(item.getResponsable_tecnico());
+                        }
+
+                        todosgrupo.add(ticketDTO);
+                    }
                 }
             }
         }
@@ -246,6 +252,7 @@ public class TicketService implements ITicketService {
         return todosgrupo;
 
     }
+    //Para la vista de Agente
 
     @Override
     public Ticket asignarResponsable(int id_ticket, int id_usuario) {
@@ -291,6 +298,57 @@ public class TicketService implements ITicketService {
 
         return true;
 
+    }
+
+    //Para la vista Tecnico
+
+    @Override
+    public Ticket asignarResponsableTecnico(int id_ticket, int id_usuario) {
+        Ticket ticket = ticketRepository.findById(id_ticket).orElse(null);
+
+        ticket.setResponsable_tecnico(id_usuario);
+
+        return ticketRepository.save(ticket);
+    }
+
+    @Override
+    public Ticket desasignarResponsableTecnico(int id_ticket) {
+        Ticket ticket = ticketRepository.findById(id_ticket).orElse(null);
+
+        ticket.setResponsable_tecnico(null);
+
+        return ticketRepository.save(ticket);
+    }
+
+    @Override
+    public List<Ticket> verTicketsAsignadosTecnico(int id_usuario) {
+        return ticketRepository.verTicketsAsignadosTecnico(id_usuario);
+    }
+
+    @Override
+    public void liberarTicketsTecnico(int id_usuario) {
+        List<Ticket> tickets = ticketRepository.verTicketsAsignadosTecnico(id_usuario);
+
+        for(Ticket item: tickets){
+
+            item.setResponsable_tecnico(null);
+            ticketRepository.save(item);
+
+        }
+
+    }
+
+    @Override
+    public boolean dropearTicketTecnico(int id_ticket) {
+        Ticket ticket = ticketRepository.findById(id_ticket).orElse(null);
+
+        if(ticket == null){
+            return false;
+        }
+        ticket.setResponsable_tecnico(null);
+        ticketRepository.save(ticket);
+
+        return true;
     }
 
 

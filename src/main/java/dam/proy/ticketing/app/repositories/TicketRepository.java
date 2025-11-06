@@ -28,6 +28,11 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     //Buscar los tickets en los que el responsable sea el agente logeado
     @Query("SELECT t FROM Ticket t WHERE t.responsable = :id_usuario")
     List<Ticket> verTicketsAsignados(int id_usuario);
+    //Buscar los tickets en los que el responsable sea el tecnico logeado
+    @Query("SELECT t FROM Ticket t WHERE t.responsable_tecnico = :id_usuario")
+    List<Ticket> verTicketsAsignadosTecnico(int id_usuario);
+
+
 
 
 }

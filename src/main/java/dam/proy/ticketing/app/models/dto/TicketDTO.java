@@ -27,6 +27,7 @@ public class TicketDTO {
     private int id_grupo;
     private int id_tecnico;
     private LocalDateTime fecha_resolucion;
+    private int responsable_tecnico;
 
     public TicketDTO() {
     }
@@ -71,6 +72,34 @@ public class TicketDTO {
         this.descripcion = descripcion;
         this.asunto = asunto;
         this.id = id;
+    }
+
+    public TicketDTO(int id, int responsable_tecnico, LocalDateTime fecha_resolucion, int id_tecnico, int id_grupo, List<Anotacion> anotaciones, List<Historial> historiales, String solicitante, String tecnico, String grupo, PrioridadTicket prioridad, ImpactoTicket impacto, UrgenciaTicket urgencia, EstadoTicket estadoTicket, LocalDateTime fechaCreacion, String descripcion, String asunto) {
+        this.id = id;
+        this.responsable_tecnico = responsable_tecnico;
+        this.fecha_resolucion = fecha_resolucion;
+        this.id_tecnico = id_tecnico;
+        this.id_grupo = id_grupo;
+        this.anotaciones = anotaciones;
+        this.historiales = historiales;
+        this.solicitante = solicitante;
+        this.tecnico = tecnico;
+        this.grupo = grupo;
+        this.prioridad = prioridad;
+        this.impacto = impacto;
+        this.urgencia = urgencia;
+        this.estadoTicket = estadoTicket;
+        this.fechaCreacion = fechaCreacion;
+        this.descripcion = descripcion;
+        this.asunto = asunto;
+    }
+
+    public int getResponsable_tecnico() {
+        return responsable_tecnico;
+    }
+
+    public void setResponsable_tecnico(int responsable_tecnico) {
+        this.responsable_tecnico = responsable_tecnico;
     }
 
     public LocalDateTime getFecha_resolucion() {
@@ -220,6 +249,7 @@ public class TicketDTO {
                 ", id_grupo=" + id_grupo +
                 ", id_tecnico=" + id_tecnico +
                 ", fecha_resolucion=" + fecha_resolucion +
+                ", responsable_tecnico=" + responsable_tecnico +
                 '}';
     }
 }
