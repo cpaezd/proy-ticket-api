@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UsuarioService implements IUsuarioService {
@@ -26,6 +27,7 @@ public class UsuarioService implements IUsuarioService {
 
 	@Autowired
 	private SolicitanteService solicitanteService;
+
 	@Autowired
 	private AgenteRepository agenteRepository;
 
@@ -130,7 +132,7 @@ public class UsuarioService implements IUsuarioService {
 		if(nur.getPerfil() == 4) {
 			Solicitante solicitante = new Solicitante();
 
-			solicitante.setId((int) pivot.getId());
+			solicitante.setId(pivot.getId());
 			solicitante.setEmpresa(nur.getEmpresa());
 			solicitante.setCif(nur.getCif());
 
@@ -144,7 +146,7 @@ public class UsuarioService implements IUsuarioService {
 			Agente agente = new Agente();
 
 			agente.setGrupo(new Grupo(nur.getGrupo()));
-			agente.setId((int) pivot.getId());
+			agente.setId( pivot.getId());
 
 			try {
 				this.agenteService.nuevoAgente(agente);
@@ -157,12 +159,47 @@ public class UsuarioService implements IUsuarioService {
 	}
 
 	@Override
-	public boolean editarUsuario(int id, Usuario usuario) {
-		return false;
+	public boolean editarUsuario(int id, EditUsuarioRequest eur) {
+		Usuario editar = this.usuarioRepository.findById(id).orElse(null);
+
+		if (editar == null) {
+			return false;
+		}
+
+		editar.setNombre(eur.getNombre());
+		editar.setApellidos(eur.getApellidos());
+		editar.setEmail(eur.getEmail());
+
+		if(eur.getPerfil() == 4) {
+			Solicitante solicitanteEditar = this.solicitanteService.getSolicitante(editar.getId());
+
+			solicitanteEditar.setTelefono(eur.getTelefono());
+			solicitanteEditar.setCif(eur.getCif());
+			solicitanteEditar.setEmpresa(eur.getEmpresa());
+
+			this.solicitanteService.updateSolicitante(solicitanteEditar);
+		} else {
+			Agente agenteEditar = this.agenteService.getAgente(editar.getId());
+
+			agenteEditar.setGrupo(new Grupo(eur.getGrupo()));
+
+			this.agenteService.actualizarAgente(agenteEditar);
+		}
+
+		return true;
 	}
 
 	@Override
 	public boolean cambiarEstadoUsuario(int id) {
-		return false;
+		Usuario usuario = this.usuarioRepository.findById(id).orElse(null);
+
+		if(usuario == null) {
+			return false;
+		}
+
+		usuario.setActivo(!usuario.isActivo());
+		this.usuarioRepository.save(usuario);
+
+		return true;
 	}
 }

@@ -8,6 +8,7 @@ import java.util.List;
 public interface IAgenteService {
     Agente nuevoAgente(Agente agente);
     List<UsuarioDTO> obtenerUsuariosPorGrupo(int id_grupo);
+	Agente actualizarAgente(Agente agente);
 
 	Agente getAgente(int id);
 }

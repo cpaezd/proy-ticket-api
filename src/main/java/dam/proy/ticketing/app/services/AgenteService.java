@@ -38,6 +38,11 @@ public class AgenteService implements IAgenteService {
     }
 
     @Override
+    public Agente actualizarAgente(Agente agente) {
+        return this.agenteRepository.save(agente);
+    }
+
+    @Override
     public Agente getAgente(int id) {
         return this.agenteRepository.findById(id).orElse(null);
     }

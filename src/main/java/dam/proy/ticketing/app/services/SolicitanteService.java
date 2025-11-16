@@ -69,7 +69,6 @@ public class SolicitanteService implements ISolicitanteService {
         return ticketRepository.save(nuevoTicket);
     }
 
-
     @Override
     public Solicitante nuevoSolicitante(Solicitante solicitante) {
         return this.solicitanteRepository.save(solicitante);
@@ -80,4 +79,8 @@ public class SolicitanteService implements ISolicitanteService {
         return this.solicitanteRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public Solicitante updateSolicitante(Solicitante solicitante) {
+        return this.solicitanteRepository.save(solicitante);
+    }
 }

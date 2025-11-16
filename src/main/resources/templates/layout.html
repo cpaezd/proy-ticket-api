@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+	<title></title>
+</head>
+<body>
+
+<header th:fragment="header">
+
+</header>
+
+<hr>
+
+<main>
+	<div th:replace="${content}">
+		Contenido de la página.
+	</div>
+</main>
+
+<hr>
+
+<footer th:fragment="footer">
+	<p>&copy; 2025 - Derechos Reservados</p>
+</footer>
+
+</body>
+</html>

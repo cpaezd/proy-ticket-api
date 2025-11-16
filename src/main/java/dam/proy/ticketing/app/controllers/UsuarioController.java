@@ -1,5 +1,6 @@
 package dam.proy.ticketing.app.controllers;
 
+import dam.proy.ticketing.app.models.dto.EditUsuarioRequest;
 import dam.proy.ticketing.app.models.dto.LoginResponseDTO;
 import dam.proy.ticketing.app.models.Usuario;
 import dam.proy.ticketing.app.models.dto.NuevoUsuarioRequest;
@@ -56,5 +57,11 @@ class UsuarioController {
         }
     }
 
+    @PutMapping("/{id}/editar")
+    public ResponseEntity<?> editarUsuario(@PathVariable int id, @RequestBody EditUsuarioRequest eur)
+    {
+        this.usuarioService.editarUsuario(id, eur);
 
+        return ResponseEntity.ok().build();
+    }
 }
