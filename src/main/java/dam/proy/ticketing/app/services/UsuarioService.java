@@ -11,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class UsuarioService implements IUsuarioService {
@@ -146,7 +145,7 @@ public class UsuarioService implements IUsuarioService {
 			Agente agente = new Agente();
 
 			agente.setUsuario(pivot);
-			agente.setGrupo(new Grupo(nur.getGrupo()));
+			agente.setGrupo(new Grupo(nur.getIdGrupo()));
 
 			try {
 				this.agenteService.nuevoAgente(agente);
@@ -181,7 +180,7 @@ public class UsuarioService implements IUsuarioService {
 		} else {
 			Agente agenteEditar = this.agenteService.getAgente(editar.getId());
 
-			agenteEditar.setGrupo(new Grupo(eur.getGrupo()));
+			agenteEditar.setGrupo(new Grupo(eur.getIdGrupo()));
 
 			this.agenteService.actualizarAgente(agenteEditar);
 		}

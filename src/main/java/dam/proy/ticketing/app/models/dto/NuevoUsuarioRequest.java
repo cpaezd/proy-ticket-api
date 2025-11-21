@@ -8,7 +8,7 @@ public class NuevoUsuarioRequest
 	private int perfil;
 	private String password;
 
-	private int grupo;
+	private int idGrupo;
 
 	private String empresa;
 	private String telefono;
@@ -25,7 +25,7 @@ public class NuevoUsuarioRequest
 		this.email = email;
 		this.perfil = perfil;
 		this.password = password;
-		this.grupo = grupo;
+		this.idGrupo = grupo;
 	}
 
 	public NuevoUsuarioRequest(String nombre, String apellidos, String email, int perfil, String password, String empresa, String telefono, String cif) {
@@ -59,8 +59,8 @@ public class NuevoUsuarioRequest
 		return password;
 	}
 
-	public int getGrupo() {
-		return grupo;
+	public int getIdGrupo() {
+		return idGrupo;
 	}
 
 	public String getEmpresa() {
