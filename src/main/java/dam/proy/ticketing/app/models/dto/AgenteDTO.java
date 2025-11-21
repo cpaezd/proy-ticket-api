@@ -37,5 +37,15 @@ public class AgenteDTO extends UsuarioDTO
 		return grupo;
 	}
 
+	public void setGrupo(String grupo) {
+		this.grupo = grupo;
+	}
 
+	public int getIdGrupo() {
+		return idGrupo;
+	}
+
+	public void setIdGrupo(int idGrupo) {
+		this.idGrupo = idGrupo;
+	}
 }

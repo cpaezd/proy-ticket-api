@@ -39,7 +39,7 @@ class UsuarioController {
     }
 
     @PostMapping("/nuevo")
-    public ResponseEntity<?>  nuevoUsuario(@RequestBody NuevoUsuarioRequest nur)
+    public ResponseEntity<?> nuevoUsuario(@RequestBody NuevoUsuarioRequest nur)
     {
         return this.usuarioService.nuevoUsuario(nur)
             ? ResponseEntity.ok().build()

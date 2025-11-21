@@ -36,7 +36,11 @@ public class Perfil {
         this.nombre = nombre;
     }
 
-    public int getId() {
+	public Perfil(int id) {
+        this.id = id;
+	}
+
+	public int getId() {
         return id;
     }
 

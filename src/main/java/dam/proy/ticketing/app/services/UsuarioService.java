@@ -1,10 +1,7 @@
 package dam.proy.ticketing.app.services;
 
-import dam.proy.ticketing.app.models.Agente;
-import dam.proy.ticketing.app.models.Grupo;
-import dam.proy.ticketing.app.models.Solicitante;
+import dam.proy.ticketing.app.models.*;
 import dam.proy.ticketing.app.models.dto.*;
-import dam.proy.ticketing.app.models.Usuario;
 import dam.proy.ticketing.app.repositories.AgenteRepository;
 import dam.proy.ticketing.app.repositories.UsuarioRepository;
 import dam.proy.ticketing.app.security.JwtUtil;
@@ -121,7 +118,9 @@ public class UsuarioService implements IUsuarioService {
 		nuevo.setNombre(nur.getNombre());
 		nuevo.setApellidos(nur.getApellidos());
 		nuevo.setEmail(nur.getEmail());
-		nuevo.setPassword(passwordEncoder.encode(nur.getPassword()));
+		nuevo.setPassword(passwordEncoder.encode("159"));
+		nuevo.setPerfil(new Perfil(nur.getPerfil()));
+
 
 		try {
 			pivot = this.usuarioRepository.save(nuevo);
@@ -132,9 +131,10 @@ public class UsuarioService implements IUsuarioService {
 		if(nur.getPerfil() == 4) {
 			Solicitante solicitante = new Solicitante();
 
-			solicitante.setId(pivot.getId());
+			solicitante.setUsuario(pivot);
 			solicitante.setEmpresa(nur.getEmpresa());
 			solicitante.setCif(nur.getCif());
+			solicitante.setTelefono(nur.getTelefono());
 
 			try {
 				this.solicitanteService.nuevoSolicitante(solicitante);
@@ -145,8 +145,8 @@ public class UsuarioService implements IUsuarioService {
 		} else {
 			Agente agente = new Agente();
 
+			agente.setUsuario(pivot);
 			agente.setGrupo(new Grupo(nur.getGrupo()));
-			agente.setId( pivot.getId());
 
 			try {
 				this.agenteService.nuevoAgente(agente);
