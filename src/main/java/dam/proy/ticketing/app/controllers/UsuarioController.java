@@ -64,4 +64,12 @@ class UsuarioController {
 
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<?> cambiarEstadoUsuario(@PathVariable Integer id)
+    {
+        this.usuarioService.cambiarEstadoUsuario(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
