@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -207,6 +209,19 @@ class TicketController {
         }else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ticket no encontrado");
         }
+    }
+    // --------- FILTROS ---------------------
+
+    @GetMapping("/asunto")
+    public ResponseEntity<List<Ticket>> filtrarPorAsunto(@RequestParam String asunto){
+        List<Ticket> tickets = ticketService.buscarPorAsunto(asunto);
+        return ResponseEntity.ok(tickets);
+    }
+
+    @GetMapping("/fechas")
+    public ResponseEntity<List<Ticket>> filtrarPorFechas (@RequestParam LocalDate fechaInicio, @RequestParam LocalDate fechaFin){
+        List<Ticket> tickets = ticketService.buscarPorFechaInicioFin(fechaInicio,fechaFin);
+        return ResponseEntity.ok(tickets);
     }
 
 }

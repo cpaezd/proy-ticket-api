@@ -8,6 +8,7 @@ import dam.proy.ticketing.app.services.interfaces.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -349,6 +350,35 @@ public class TicketService implements ITicketService {
         ticketRepository.save(ticket);
 
         return true;
+    }
+
+    @Override
+    public List<Ticket> buscarPorAsunto(String asunto) {
+        List<Ticket> tickets =  ticketRepository.obtenerTicketsPorAsunto(asunto);
+        List<Ticket> ticketsEstado = new ArrayList<>();
+
+        for(Ticket item: tickets){
+            if(item.getEstadoTicket() == EstadoTicket.RESUELTO || item.getEstadoTicket() == EstadoTicket.CERRADO){
+                ticketsEstado.add(item);
+            }
+        }
+
+        return ticketsEstado;
+    }
+
+    @Override
+    public List<Ticket> buscarPorFechaInicioFin(LocalDate fechaInicio, LocalDate fechaFin) {
+        LocalDateTime inicio = fechaInicio.atStartOfDay();
+        LocalDateTime fin = fechaFin.atTime(23,59,59);
+        List<Ticket> tickets =  ticketRepository.obtenerTicketsPorFechaInicioYFin(inicio,fin);
+        List<Ticket> ticketsEstado = new ArrayList<>();
+
+        for(Ticket item : tickets){
+            if(item.getEstadoTicket() == EstadoTicket.RESUELTO || item.getEstadoTicket() == EstadoTicket.CERRADO){
+                ticketsEstado.add(item);
+            }
+        }
+        return ticketsEstado;
     }
 
 

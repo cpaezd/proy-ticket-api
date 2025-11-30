@@ -6,6 +6,8 @@ import dam.proy.ticketing.app.models.enums.EstadoTicket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 // 1. Asegúrate de que el ID del Ticket sea Integer
@@ -31,6 +33,14 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     //Buscar los tickets en los que el responsable sea el tecnico logeado
     @Query("SELECT t FROM Ticket t WHERE t.responsable_tecnico = :id_usuario")
     List<Ticket> verTicketsAsignadosTecnico(int id_usuario);
+
+    // -----------------   FILTROS -------------------
+
+    @Query("SELECT t FROM Ticket t WHERE t.asunto LIKE CONCAT(:asunto, '%')")
+    List<Ticket> obtenerTicketsPorAsunto(String asunto);
+
+    @Query("SELECT t FROM Ticket t WHERE t.fechaCreacion BETWEEN :fechaInicio AND :fechaFin")
+    List<Ticket> obtenerTicketsPorFechaInicioYFin(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
 
 
