@@ -5,6 +5,8 @@ import dam.proy.ticketing.app.models.dto.TicketDTO;
 import dam.proy.ticketing.app.models.enums.EstadoTicket;
 import dam.proy.ticketing.app.repositories.*;
 import dam.proy.ticketing.app.services.interfaces.ITicketService;
+import dam.proy.ticketing.app.services.mailing.IMailingService;
+import dam.proy.ticketing.app.services.mailing.MailingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,9 @@ public class TicketService implements ITicketService {
 
     @Autowired
     private HistorialRepository historialRepository;
+
+    @Autowired
+    private IMailingService mailingService;
 
     @Override
     public List<Ticket> verActivosParaAgente(int id_usuario) {
@@ -153,6 +158,8 @@ public class TicketService implements ITicketService {
             Grupo nuevoGrupo = grupoRepository.findByNombre(ticket.getGrupo().getNombre());
             if (nuevoGrupo != null) {
                 ticket1.setGrupo(nuevoGrupo);
+
+                mailingService.sendAssignedTicketMail(ticket1);
             }
         }
         if(ticket.getAgente() != null && ticket.getAgente().getId() != 0){
