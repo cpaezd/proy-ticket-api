@@ -1,0 +1,23 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+	<title>Nuevo Ticket</title>
+</head>
+<body>
+
+<p>
+	Estimad@ <span th:text="${ticket.solicitante.usuario.nombre}"></span> :
+</p>
+
+<p>
+	Le informamos que su ticket con número #<span th:text="${ticket.id}"></span> ha sido registrado correctamente.
+</p>
+
+<p>
+	En breve, nuestros técnicos revisaran su caso y le informarán a la mayor brevedad posible
+</p>
+
+<p>
+	Equipo de Helpdesk España.
+</p>
+</body>
+</html>

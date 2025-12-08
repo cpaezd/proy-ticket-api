@@ -6,6 +6,8 @@ import dam.proy.ticketing.app.repositories.AgenteRepository;
 import dam.proy.ticketing.app.repositories.UsuarioRepository;
 import dam.proy.ticketing.app.security.JwtUtil;
 import dam.proy.ticketing.app.services.interfaces.IUsuarioService;
+import dam.proy.ticketing.app.services.mailing.IMailingService;
+import dam.proy.ticketing.app.services.mailing.MailingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,9 @@ public class UsuarioService implements IUsuarioService {
 
 	@Autowired
 	private AgenteRepository agenteRepository;
+
+//	@Autowired
+//	private IMailingService mailingService;
 
 	@Autowired
 	private JwtUtil jwtUtil;

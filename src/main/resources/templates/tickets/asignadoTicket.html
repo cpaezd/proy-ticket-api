@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+	<title>Ticket asignado a grupo</title>
+</head>
+<body>
+
+<p>
+	Hola
+</p>
+
+<p>
+	El ticket con número #<span th:text="${ticket.id}"></span> se ha asignado a su grupo "<span th:text="${ticket.grupo.nombre}"></span>".
+</p>
+
+<p th:text="${ticket.descripcion}">
+
+</p>
+
+<p>
+	<span th:text="${ticket.solicitante.usuario.email}"></span>
+</p>
+
+<p>
+	<span th:text="${ticket.solicitante.usuario.nombre}"></span> <span th:text="${ticket.solicitante.usuario.apellidos}"></span>
+</p>
+</body>
+</html>

@@ -1,22 +1,18 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-	<title>Nueva respuesta</title>
+	<title>Ticket Resuelto</title>
 </head>
 <body>
-
-
-
-
 <p>
 	Estimado cliente:
 </p>
 
 <p>
-	El ticket #<span th:text="${id}"></span> ha sido resuelto por nuestro técnicos.
+	Nuestros técnicos han añadido una anotación del ticket #<span th:text="${id}"></span>
 </p>
 
-<p>
-	Si cree que no está acorde con la resolución, por favor conteste a este correo o
+<p th:text="${descripcion}">
+
 </p>
 
 <p>
