@@ -15,32 +15,24 @@ public class SolicitanteController {
     @Autowired
     private ISolicitanteService solicitanteService;
 
-    /**
-     * Endpoint para que un solicitante obtenga todos sus tickets.
-     * Utiliza el objeto Authentication para identificar al usuario logueado.
-     */
     @GetMapping("/tickets")
-    public ResponseEntity<?> obtenerTicketsDelSolicitante(Authentication authentication) {
+    public ResponseEntity<?> obtenerTicketsDelSolicitante(
+            Authentication authentication,
+            @RequestParam(required = false) String estado) {
 
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado.");
         }
 
         try {
-
             String emailUsuario = authentication.getName();
-            var tickets = solicitanteService.obtenerTicketsPorEmail(emailUsuario);
+            var tickets = solicitanteService.obtenerTicketsPorEmailYEstado(emailUsuario, estado);
             return ResponseEntity.ok(tickets);
         } catch (Exception e) {
-
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al obtener los tickets: " + e.getMessage());
         }
     }
 
-    /**
-     * Endpoint para que un solicitante cree un nuevo ticket.
-     * Recibe los datos del ticket en el cuerpo de la petición.
-     */
     @PostMapping("/tickets")
     public ResponseEntity<?> crearTicket(@RequestBody TicketCreacionDTO ticketDTO, Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {

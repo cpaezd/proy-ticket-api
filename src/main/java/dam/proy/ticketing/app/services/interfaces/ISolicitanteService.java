@@ -15,7 +15,8 @@ public interface ISolicitanteService {
     /**
      * Define el método para obtener tickets.
      */
-    List<Ticket> obtenerTicketsPorEmail(String email);
+// Declaración del nuevo método
+    List<Ticket> obtenerTicketsPorEmailYEstado(String emailUsuario, String estado);
 
     /**
      * Define el método para crear un ticket.

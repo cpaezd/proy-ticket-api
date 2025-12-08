@@ -42,7 +42,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     @Query("SELECT t FROM Ticket t WHERE t.fechaCreacion BETWEEN :fechaInicio AND :fechaFin")
     List<Ticket> obtenerTicketsPorFechaInicioYFin(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
-
+    List<Ticket> findBySolicitante_Usuario_EmailAndEstadoTicket(String email, EstadoTicket estadoTicket);
 
 
 }
