@@ -32,11 +32,12 @@ public class SolicitanteService implements ISolicitanteService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<Ticket> obtenerTicketsPorEmail(String email) {
-        // 1. Llama directamente al método que busca por el email del usuario anidado.
-        return ticketRepository.findBySolicitante_Usuario_Email(email);
+    public List<Ticket> obtenerTicketsPorEmailYEstado(String email, String estado) {
+        return ticketRepository.findBySolicitante_Usuario_EmailAndEstadoTicket(
+                email,
+                EstadoTicket.valueOf(estado)  // Convertir el String al enum
+        );
     }
-
     /**
      * Implementación para crear el ticket.
      */
