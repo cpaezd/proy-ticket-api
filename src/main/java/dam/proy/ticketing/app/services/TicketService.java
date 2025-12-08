@@ -183,16 +183,20 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public List<TicketDTO> buscarPorGrupo(int id_grupo,int id_usuario) {
+    public List<TicketDTO> buscarPorGrupo(int id_grupo, int id_usuario) {
 
         List<Ticket> todos = ticketRepository.findAll();
         List<TicketDTO> todosgrupo = new ArrayList<>();
 
-        for(Ticket item : todos){
+        for (Ticket item : todos) {
 
-            if(item.getEstadoTicket() != EstadoTicket.RESUELTO && item.getEstadoTicket() != EstadoTicket.CERRADO) {
+            // Filtramos por estado
+            if (item.getEstadoTicket() != EstadoTicket.RESUELTO && item.getEstadoTicket() != EstadoTicket.CERRADO) {
 
-                if (item.getGrupo().getId() == id_grupo) {
+                // Validamos que el grupo no sea null antes de acceder
+                if (item.getGrupo() != null && item.getGrupo().getId() == id_grupo) {
+
+                    // Validamos responsable técnico
                     if (item.getResponsable_tecnico() == null || item.getResponsable_tecnico() == id_usuario) {
 
                         TicketDTO ticketDTO = new TicketDTO();
@@ -205,10 +209,17 @@ public class TicketService implements ITicketService {
                         ticketDTO.setUrgencia(item.getUrgencia());
                         ticketDTO.setImpacto(item.getImpacto());
                         ticketDTO.setPrioridad(item.getPrioridad());
+
+
                         ticketDTO.setGrupo(item.getGrupo().getNombre());
                         ticketDTO.setId_grupo(item.getGrupo().getId());
-                        ticketDTO.setTecnico(item.getAgente().getUsuario().getNombre());
-                        ticketDTO.setId_tecnico(item.getAgente().getId());
+
+
+                        if (item.getAgente() != null && item.getAgente().getUsuario() != null) {
+                            ticketDTO.setTecnico(item.getAgente().getUsuario().getNombre());
+                            ticketDTO.setId_tecnico(item.getAgente().getId());
+                        }
+
 
                         if (item.getResponsable_tecnico() != null) {
                             ticketDTO.setResponsable_tecnico(item.getResponsable_tecnico());
@@ -221,8 +232,8 @@ public class TicketService implements ITicketService {
         }
 
         return todosgrupo;
-
     }
+
 
     @Override
     public List<TicketDTO> buscarPorGrupoResueltos(int id_grupo) {
