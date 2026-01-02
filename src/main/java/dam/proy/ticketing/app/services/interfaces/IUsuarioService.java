@@ -1,10 +1,7 @@
 package dam.proy.ticketing.app.services.interfaces;
 
-import dam.proy.ticketing.app.models.dto.EditUsuarioRequest;
-import dam.proy.ticketing.app.models.dto.LoginResponseDTO;
+import dam.proy.ticketing.app.models.dto.*;
 import dam.proy.ticketing.app.models.Usuario;
-import dam.proy.ticketing.app.models.dto.NuevoUsuarioRequest;
-import dam.proy.ticketing.app.models.dto.UsuarioDTO;
 
 import java.util.List;
 
@@ -16,5 +13,6 @@ public interface IUsuarioService {
     boolean cambiarEstadoUsuario(int id);
     LoginResponseDTO autentificar(Usuario usuario);
     Usuario buscarPorEmail(String email);
-        // boolean nuevoUsuario(Usuario nuevo)
+    boolean requestResetPassword(String email);
+    boolean changePassword(ChangePasswordRequest changePasswordRequest);
 }

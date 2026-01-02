@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+	<title>Solicitud Restablecimiento Contraseña</title>
+</head>
+<body>
+<p>
+	Estimad@ usuari@:
+</p>
+
+<p>
+	Para cambiar su contraseña, diríjase al siguiente link:
+</p>
+
+<a th:href="@{http://localhost:5173/reset-password(token=${token}, email=${email})}">Restablecer Contraseña</a>
+
+<p th:text="${descripcion}">
+
+</p>
+
+<p>
+	En el caso de que no haya solicitado este cambio, por favor, ignore este correo.
+</p>
+</body>
+</html>

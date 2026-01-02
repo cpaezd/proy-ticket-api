@@ -1,10 +1,7 @@
 package dam.proy.ticketing.app.controllers;
 
-import dam.proy.ticketing.app.models.dto.EditUsuarioRequest;
-import dam.proy.ticketing.app.models.dto.LoginResponseDTO;
+import dam.proy.ticketing.app.models.dto.*;
 import dam.proy.ticketing.app.models.Usuario;
-import dam.proy.ticketing.app.models.dto.NuevoUsuarioRequest;
-import dam.proy.ticketing.app.models.dto.UsuarioDTO;
 import dam.proy.ticketing.app.services.interfaces.IUsuarioService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,4 +69,19 @@ class UsuarioController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/request-reset/{email}")
+    public ResponseEntity<?> requestResetPassword(@PathVariable String email)
+    {
+        return this.usuarioService.requestResetPassword(email)
+            ?  ResponseEntity.ok().build()
+            : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody ChangePasswordRequest changePasswordRequest)
+    {
+        return this.usuarioService.changePassword(changePasswordRequest)
+            ? ResponseEntity.ok().build()
+            : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
 }

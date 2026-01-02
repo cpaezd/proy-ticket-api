@@ -3,16 +3,19 @@ package dam.proy.ticketing.app.services;
 import dam.proy.ticketing.app.models.*;
 import dam.proy.ticketing.app.models.dto.*;
 import dam.proy.ticketing.app.repositories.AgenteRepository;
+import dam.proy.ticketing.app.repositories.PasswordResetTokenRepository;
 import dam.proy.ticketing.app.repositories.UsuarioRepository;
 import dam.proy.ticketing.app.security.JwtUtil;
+import dam.proy.ticketing.app.services.interfaces.ISolicitanteService;
 import dam.proy.ticketing.app.services.interfaces.IUsuarioService;
 import dam.proy.ticketing.app.services.mailing.IMailingService;
-import dam.proy.ticketing.app.services.mailing.MailingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UsuarioService implements IUsuarioService {
@@ -24,13 +27,16 @@ public class UsuarioService implements IUsuarioService {
 	private AgenteService agenteService;
 
 	@Autowired
-	private SolicitanteService solicitanteService;
+	private ISolicitanteService solicitanteService;
 
 	@Autowired
 	private AgenteRepository agenteRepository;
 
-//	@Autowired
-//	private IMailingService mailingService;
+	@Autowired
+	private PasswordResetTokenRepository passwordResetTokenRepository;
+
+	@Autowired
+	private IMailingService mailingService;
 
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -79,6 +85,52 @@ public class UsuarioService implements IUsuarioService {
 		Usuario usuario = usuarioRepository.findByEmail(email)
 				.orElseThrow(() -> new RuntimeException("Usuario no encontrado con email: " + email));;
 		return usuario;
+	}
+
+	@Override
+	public boolean requestResetPassword(String email)
+	{
+		Usuario usuario = buscarPorEmail(email);
+
+		if(usuario == null)
+		{
+			return false;
+		}
+
+		PasswordResetToken prt = new PasswordResetToken();
+
+		prt.setToken(UUID.randomUUID().toString());
+		prt.setUsuario(usuario);
+		prt.setFechaCaducidad(LocalDateTime.now().plusMinutes(5));
+
+		passwordResetTokenRepository.save(prt);
+
+		this.mailingService.sendRecoverPasswordMail(prt);
+
+		return true;
+	}
+
+	@Override
+	public boolean changePassword(ChangePasswordRequest cpr)
+	{
+		PasswordResetToken prs = passwordResetTokenRepository.findByToken(cpr.getToken());
+
+		if(prs == null)
+		{
+			return false;
+		}
+
+		Usuario usuario = buscarPorEmail(cpr.getEmail());
+
+		if(usuario == null)
+		{
+			return false;
+		}
+
+		usuario.setPassword(passwordEncoder.encode(cpr.getNewPassword()));
+		usuarioRepository.save(usuario);
+
+		return true;
 	}
 
 	@Override

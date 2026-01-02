@@ -10,6 +10,7 @@ import dam.proy.ticketing.app.repositories.HistorialRepository;
 import dam.proy.ticketing.app.repositories.TicketRepository;
 import dam.proy.ticketing.app.repositories.UsuarioRepository;
 import dam.proy.ticketing.app.services.interfaces.IAnotacionService;
+import dam.proy.ticketing.app.services.mailing.IMailingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class AnotacionService implements IAnotacionService {
 
     @Autowired
     private HistorialRepository historialRepository;
+
     @Autowired
     private TicketRepository ticketRepository;
 
@@ -106,6 +108,8 @@ public class AnotacionService implements IAnotacionService {
 
         anotacionRepository.save(anotacion);
 
+        //this.mailingService.sendNewAnnotationMail(anotacion);
+
         //Aqui le digo que si ticket esta abierto y un agente escribe una anotacion en ese ticket cambie su estado de Abierto a Pendiente.
         if(usuario.getPerfil().getNombre().equalsIgnoreCase("AGENTE") && ticket.getEstadoTicket() == EstadoTicket.ABIERTO){
             ticket.setEstadoTicket(EstadoTicket.PENDIENTE);
@@ -119,6 +123,8 @@ public class AnotacionService implements IAnotacionService {
         historial.setDetalles("ha escrito un mensaje");
 
         historialRepository.save(historial);
+
+
     }
 
 

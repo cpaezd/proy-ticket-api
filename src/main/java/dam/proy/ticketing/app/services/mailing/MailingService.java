@@ -1,11 +1,8 @@
 package dam.proy.ticketing.app.services.mailing;
 
-import dam.proy.ticketing.app.models.Anotacion;
-import dam.proy.ticketing.app.models.Grupo;
-import dam.proy.ticketing.app.models.Ticket;
+import dam.proy.ticketing.app.models.*;
 import dam.proy.ticketing.app.repositories.TicketRepository;
 import dam.proy.ticketing.app.services.interfaces.IAnotacionService;
-import dam.proy.ticketing.app.services.interfaces.ITicketService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +48,7 @@ public class MailingService implements IMailingService
 	private final String RESOLVED_TICKET_TEMPLATE = "tickets/ResueltoTicket.html";
 	private final String CLOSED_TICKET_TEMPLATE = "tickets/cierreTicket.html";
 
-	private final String[] testEmailsTo = {
-	};
-
+	private final String[] testEmailsTo = {};
 
 	private void sendMail(String subject, List<String> emailsTo, Map<String, Object> data, String template)
 	{
@@ -162,6 +157,21 @@ public class MailingService implements IMailingService
 			List.of(ticket.getSolicitante().getUsuario().getEmail()),
 			Map.of("ticket", ticket),
 			RESOLVED_TICKET_TEMPLATE
+		);
+	}
+
+	@Override
+	@Async
+	public void sendRecoverPasswordMail(PasswordResetToken passwordResetToken)
+	{
+		this.sendMail(
+			"Recuperación de contraseña",
+			List.of(passwordResetToken.getUsuario().getEmail()),
+			Map.of(
+				"email", passwordResetToken.getUsuario().getEmail(),
+				"token", passwordResetToken.getToken()
+			),
+			"requestReset.html"
 		);
 	}
 }
