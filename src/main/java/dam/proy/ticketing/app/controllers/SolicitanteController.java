@@ -15,10 +15,10 @@ public class SolicitanteController {
     @Autowired
     private ISolicitanteService solicitanteService;
 
-    @GetMapping("/tickets")
+    @GetMapping({"/tickets/{estado}", "/tickets"})
     public ResponseEntity<?> obtenerTicketsDelSolicitante(
             Authentication authentication,
-            @RequestParam(required = false) String estado) {
+            @PathVariable(required = false) String estado) {
 
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado.");
